@@ -1,7 +1,11 @@
 const mongoose = require("mongoose");
 
-const MONGO_URI =
-  process.env.MONGO_URI || "mongodb://localhost:27017/sweetshop";
+let MONGO_URI;
+if (process.env.NODE_ENV === "test") {
+  MONGO_URI = "mongodb://localhost:27017/sweetshop_test";
+} else {
+  MONGO_URI = process.env.MONGO_URI || "mongodb://localhost:27017/sweetshop";
+}
 
 const connectDB = async () => {
   try {
@@ -12,7 +16,12 @@ const connectDB = async () => {
     console.log("MongoDB connected");
   } catch (err) {
     console.error("MongoDB connection error:", err);
-    process.exit(1);
+    // Avoid process.exit during tests
+    if (process.env.NODE_ENV === "test") {
+      throw err;
+    } else {
+      process.exit(1);
+    }
   }
 };
 

@@ -5,8 +5,10 @@ const connectDB = require("./config/db");
 
 const app = express();
 
-// Connect to MongoDB
-connectDB();
+// Connect to MongoDB only if not in test environment
+if (process.env.NODE_ENV !== "test") {
+  connectDB();
+}
 
 // Middleware
 app.use(express.json());
