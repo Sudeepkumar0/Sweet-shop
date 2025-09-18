@@ -90,6 +90,22 @@ const Register = () => {
       </form>
       {error && <p style={{ color: "red", marginTop: 8 }}>{error}</p>}
       {success && <p style={{ color: "green", marginTop: 8 }}>{success}</p>}
+      <button
+        type="button"
+        style={{
+          width: "100%",
+          padding: 8,
+          background: "#007bff",
+          color: "#fff",
+          border: "none",
+          borderRadius: 4,
+          cursor: "pointer",
+          marginTop: 8,
+        }}
+        onClick={() => navigate("/login")}
+      >
+        Login
+      </button>
     </div>
   );
 };
