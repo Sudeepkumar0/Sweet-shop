@@ -30,3 +30,7 @@ app.use("/api/auth", authRoutes);
 // Sweets routes
 const sweetsRoutes = require("./routes/sweets.routes");
 app.use("/api/sweets", sweetsRoutes);
+
+// Inventory routes
+const inventoryRoutes = require("./routes/inventory.routes");
+app.use("/api/inventory", inventoryRoutes);
