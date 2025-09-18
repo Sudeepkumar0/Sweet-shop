@@ -25,19 +25,28 @@ exports.me = async (req, res) => {
 exports.adminLogin = async (req, res) => {
   try {
     const { email, password } = req.body;
+    console.log("Admin login attempt:", email);
     const user = await User.findOne({ email });
-    if (!user || user.role !== "admin") {
+    if (!user) {
+      console.log("No user found for email:", email);
+      return res.status(400).json({ message: "Invalid credentials" });
+    }
+    if (user.role !== "admin") {
+      console.log("User is not admin:", user.email, user.role);
       return res.status(403).json({ message: "Access denied: Not an admin" });
     }
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
+      console.log("Password mismatch for:", email);
       return res.status(400).json({ message: "Invalid credentials" });
     }
     const token = jwt.sign({ id: user._id, role: user.role }, JWT_SECRET, {
       expiresIn: "1d",
     });
+    console.log("Admin login successful for:", email);
     res.json({ token });
   } catch (err) {
+    console.log("Admin login error:", err);
     res.status(500).json({ message: "Server error", error: err.message });
   }
 };

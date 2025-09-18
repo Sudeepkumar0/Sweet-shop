@@ -1,3 +1,4 @@
+// ...existing code...
 import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -25,15 +26,25 @@ const Login = () => {
   };
 
   return (
-    <div>
+    <div style={{ maxWidth: 400, margin: "0 auto" }}>
       <h2>Login</h2>
-      <form onSubmit={handleSubmit}>
+      <form
+        onSubmit={handleSubmit}
+        style={{ display: "flex", flexDirection: "column" }}
+      >
         <input
           type="email"
           placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
+          style={{
+            marginBottom: 8,
+            width: "100%",
+            padding: 8,
+            borderRadius: 4,
+            border: "1px solid #ccc",
+          }}
         />
         <input
           type="password"
@@ -41,10 +52,30 @@ const Login = () => {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
+          style={{
+            marginBottom: 8,
+            width: "100%",
+            padding: 8,
+            borderRadius: 4,
+            border: "1px solid #ccc",
+          }}
         />
-        <button type="submit">Login</button>
+        <button
+          type="submit"
+          style={{
+            width: "100%",
+            padding: 8,
+            background: "#007bff",
+            color: "#fff",
+            border: "none",
+            borderRadius: 4,
+            cursor: "pointer",
+          }}
+        >
+          Login
+        </button>
       </form>
-      {error && <p style={{ color: "red" }}>{error}</p>}
+      {error && <p style={{ color: "red", marginTop: 8 }}>{error}</p>}
     </div>
   );
 };

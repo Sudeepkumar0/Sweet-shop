@@ -1,3 +1,4 @@
+// ...existing code...
 import React, { useState } from "react";
 
 const SearchBar = ({ onSearch }) => {

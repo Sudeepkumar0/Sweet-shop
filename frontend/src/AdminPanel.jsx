@@ -1,3 +1,4 @@
+// ...existing code...
 import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { AuthContext } from "./AuthContext";
@@ -116,14 +117,22 @@ const AdminPanel = ({ adminToken }) => {
   return (
     <div style={{ maxWidth: "900px", margin: "0 auto" }}>
       <h2>Admin Panel</h2>
-      <form onSubmit={handleAddSweet} style={{ marginBottom: 24 }}>
+      <form
+        onSubmit={handleAddSweet}
+        style={{ marginBottom: 24, display: "flex", gap: 8 }}
+      >
         <input
           name="name"
           value={form.name}
           onChange={handleChange}
           placeholder="Name"
           required
-          style={{ marginRight: 8 }}
+          style={{
+            marginRight: 8,
+            padding: 8,
+            borderRadius: 4,
+            border: "1px solid #ccc",
+          }}
         />
         <input
           name="price"
@@ -131,7 +140,12 @@ const AdminPanel = ({ adminToken }) => {
           onChange={handleChange}
           placeholder="Price"
           required
-          style={{ marginRight: 8 }}
+          style={{
+            marginRight: 8,
+            padding: 8,
+            borderRadius: 4,
+            border: "1px solid #ccc",
+          }}
         />
         <input
           name="quantity"
@@ -139,7 +153,12 @@ const AdminPanel = ({ adminToken }) => {
           onChange={handleChange}
           placeholder="Quantity"
           required
-          style={{ marginRight: 8 }}
+          style={{
+            marginRight: 8,
+            padding: 8,
+            borderRadius: 4,
+            border: "1px solid #ccc",
+          }}
         />
         <input
           name="category"
@@ -147,17 +166,39 @@ const AdminPanel = ({ adminToken }) => {
           onChange={handleChange}
           placeholder="Category"
           required
-          style={{ marginRight: 8 }}
+          style={{
+            marginRight: 8,
+            padding: 8,
+            borderRadius: 4,
+            border: "1px solid #ccc",
+          }}
         />
         <input
           type="file"
           name="image"
           onChange={handleChange}
-          style={{ marginRight: 8 }}
+          style={{
+            marginRight: 8,
+            padding: 8,
+            borderRadius: 4,
+            border: "1px solid #ccc",
+          }}
         />
-        <button type="submit">Add Sweet</button>
+        <button
+          type="submit"
+          style={{
+            padding: "8px 16px",
+            background: "#007bff",
+            color: "#fff",
+            border: "none",
+            borderRadius: 4,
+            cursor: "pointer",
+          }}
+        >
+          Add Sweet
+        </button>
       </form>
-      {error && <p style={{ color: "red" }}>{error}</p>}
+      {error && <p style={{ color: "red", marginBottom: 12 }}>{error}</p>}
       <table style={{ width: "100%", borderCollapse: "collapse" }}>
         <thead>
           <tr>
@@ -179,6 +220,11 @@ const AdminPanel = ({ adminToken }) => {
                       name="name"
                       value={editForm.name}
                       onChange={handleEditChange}
+                      style={{
+                        padding: 4,
+                        borderRadius: 4,
+                        border: "1px solid #ccc",
+                      }}
                     />
                   </td>
                   <td>
@@ -186,6 +232,11 @@ const AdminPanel = ({ adminToken }) => {
                       name="price"
                       value={editForm.price}
                       onChange={handleEditChange}
+                      style={{
+                        padding: 4,
+                        borderRadius: 4,
+                        border: "1px solid #ccc",
+                      }}
                     />
                   </td>
                   <td>
@@ -193,6 +244,11 @@ const AdminPanel = ({ adminToken }) => {
                       name="quantity"
                       value={editForm.quantity}
                       onChange={handleEditChange}
+                      style={{
+                        padding: 4,
+                        borderRadius: 4,
+                        border: "1px solid #ccc",
+                      }}
                     />
                   </td>
                   <td>
@@ -200,6 +256,11 @@ const AdminPanel = ({ adminToken }) => {
                       name="category"
                       value={editForm.category}
                       onChange={handleEditChange}
+                      style={{
+                        padding: 4,
+                        borderRadius: 4,
+                        border: "1px solid #ccc",
+                      }}
                     />
                   </td>
                   <td>
@@ -207,15 +268,44 @@ const AdminPanel = ({ adminToken }) => {
                       <img
                         src={`http://localhost:5000${sweet.image}`}
                         alt={sweet.name}
-                        style={{ width: 50, height: 50, objectFit: "cover" }}
+                        style={{
+                          width: 50,
+                          height: 50,
+                          objectFit: "cover",
+                          borderRadius: 6,
+                        }}
                       />
                     )}
                   </td>
                   <td>
-                    <button onClick={() => handleUpdateSweet(sweet._id)}>
+                    <button
+                      style={{
+                        background: "#28a745",
+                        color: "#fff",
+                        margin: "0 2px",
+                        padding: "4px 8px",
+                        borderRadius: 4,
+                        border: "none",
+                        cursor: "pointer",
+                      }}
+                      onClick={() => handleUpdateSweet(sweet._id)}
+                    >
                       Update
                     </button>
-                    <button onClick={() => setEditingId(null)}>Cancel</button>
+                    <button
+                      style={{
+                        background: "#6c757d",
+                        color: "#fff",
+                        margin: "0 2px",
+                        padding: "4px 8px",
+                        borderRadius: 4,
+                        border: "none",
+                        cursor: "pointer",
+                      }}
+                      onClick={() => setEditingId(null)}
+                    >
+                      Cancel
+                    </button>
                   </td>
                 </>
               ) : (
@@ -229,13 +319,42 @@ const AdminPanel = ({ adminToken }) => {
                       <img
                         src={`http://localhost:5000${sweet.image}`}
                         alt={sweet.name}
-                        style={{ width: 50, height: 50, objectFit: "cover" }}
+                        style={{
+                          width: 50,
+                          height: 50,
+                          objectFit: "cover",
+                          borderRadius: 6,
+                        }}
                       />
                     )}
                   </td>
                   <td>
-                    <button onClick={() => startEdit(sweet)}>Edit</button>
-                    <button onClick={() => handleDelete(sweet._id)}>
+                    <button
+                      style={{
+                        background: "#ffc107",
+                        color: "#333",
+                        margin: "0 2px",
+                        padding: "4px 8px",
+                        borderRadius: 4,
+                        border: "none",
+                        cursor: "pointer",
+                      }}
+                      onClick={() => startEdit(sweet)}
+                    >
+                      Edit
+                    </button>
+                    <button
+                      style={{
+                        background: "#dc3545",
+                        color: "#fff",
+                        margin: "0 2px",
+                        padding: "4px 8px",
+                        borderRadius: 4,
+                        border: "none",
+                        cursor: "pointer",
+                      }}
+                      onClick={() => handleDelete(sweet._id)}
+                    >
                       Delete
                     </button>
                   </td>
