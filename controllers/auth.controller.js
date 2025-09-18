@@ -1,3 +1,46 @@
+// Get current user info from JWT
+exports.me = async (req, res) => {
+  try {
+    const authHeader = req.headers.authorization;
+    if (!authHeader || !authHeader.startsWith("Bearer ")) {
+      return res.status(401).json({ message: "No token provided" });
+    }
+    const token = authHeader.split(" ")[1];
+    const decoded = jwt.verify(token, JWT_SECRET);
+    const user = await User.findById(decoded.id).select("-password");
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    res.json({
+      id: user._id,
+      email: user.email,
+      username: user.username,
+      role: user.role,
+    });
+  } catch (err) {
+    res.status(401).json({ message: "Invalid token", error: err.message });
+  }
+};
+// Admin login controller
+exports.adminLogin = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    const user = await User.findOne({ email });
+    if (!user || user.role !== "admin") {
+      return res.status(403).json({ message: "Access denied: Not an admin" });
+    }
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
+      return res.status(400).json({ message: "Invalid credentials" });
+    }
+    const token = jwt.sign({ id: user._id, role: user.role }, JWT_SECRET, {
+      expiresIn: "1d",
+    });
+    res.json({ token });
+  } catch (err) {
+    res.status(500).json({ message: "Server error", error: err.message });
+  }
+};
 const User = require("../models/User");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
