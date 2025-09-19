@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import "./styles/AdminLogin.css";
 
 const AdminLogin = ({ setAdminToken }) => {
   const [email, setEmail] = useState("");
@@ -25,30 +26,35 @@ const AdminLogin = ({ setAdminToken }) => {
   };
 
   return (
-    <div style={{ maxWidth: 400, margin: "0 auto" }}>
-      <h2>Admin Login</h2>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-          style={{ marginBottom: 8, width: "100%" }}
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-          style={{ marginBottom: 8, width: "100%" }}
-        />
-        <button type="submit" style={{ width: "100%" }}>
-          Login
-        </button>
-      </form>
-      {error && <p style={{ color: "red" }}>{error}</p>}
+    <div className="loginMain">
+      <div className="logincard">
+        <div className="loginCardHeading">
+          <h2>Sweet Shop - Admin Login</h2>
+          <form onSubmit={handleSubmit} className="loginForm">
+            <input
+              className="formInput"
+              type="email"
+              placeholder="Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+            <input
+              className="formInput"
+              type="password"
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+              style={{ marginBottom: 8, width: "100%" }}
+            />
+            <button type="submit" className="loginButton">
+              Login
+            </button>
+          </form>
+          {error && <p style={{ color: "red" }}>{error}</p>}
+        </div>
+      </div>
     </div>
   );
 };
