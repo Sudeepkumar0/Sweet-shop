@@ -193,11 +193,7 @@ npm run dev
 
 
 
-
-## 🙌 Credits
-
-- Developed by Sudeepkumar0
-- AI Assistance: GitHub Copilot, ChatGPT, StitchAI, Gemini, AI Image Generator
+## Login Endpoints
   {
   "email": "your@email.com",
   "password": "yourpassword"
@@ -322,34 +318,30 @@ API endpoints can also be tested using Postman or similar tools. Example test im
 
 ### Register Endpoint
 
-![Register API Test](./register_test.png)
+![Register API Test](frontend/public/snaps/register_auth.png)
 
 ### Login Endpoint
 
-![Login API Test](./login_test.png)
+![Login API Test](frontend/public/snaps/login_auth.png)
 
 ### Create Sweet Endpoint
 
-![Create Sweet API Test](./create_sweet_test.png)
+![Create Sweet API Test](frontend/public/snaps/sweet_add.png)
 
 ### List Sweets Endpoint
 
-![List Sweets API Test](./list_sweets_test.png)
+![List Sweets API Test](frontend/public/purchase.png)
 
-### Update Sweet Endpoint
-
-![Update Sweet API Test](./update_sweet_test.png)
-
-### Delete Sweet Endpoint
-
-![Delete Sweet API Test](./delete_sweet_test.png)
 
 ---
 
 Co-authored-by: GitHub Copilot <copilot@users.noreply.github.com>
 
 
+## Author
 
+Developed by **G. Sudeep Kumar**
+[sudeepkumar.connect@gmail.com]  
 
 
 
