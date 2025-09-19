@@ -30,7 +30,7 @@ const Login = () => {
     <div className="loginMain">
       <div className="logincard">
         <h2 className="loginCardHeading">Sweet Shop</h2>
-        <form className="loginForm">
+        <form className="loginForm" onSubmit={handleSubmit}>
           <input
             className="formInput"
             type="email"
