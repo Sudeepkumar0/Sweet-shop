@@ -27,7 +27,7 @@ const Login = () => {
   };
 
   return (
-    <div className="loginMain" style={{}}>
+    <div className="loginMain">
       <div className="logincard">
         <h2 className="loginCardHeading">Sweet Shop</h2>
         <form className="loginForm">

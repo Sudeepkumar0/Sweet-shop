@@ -1,8 +1,12 @@
 // ...existing code...
 import React, { useEffect, useState } from "react";
+import { FaSearch } from "react-icons/fa";
 import axios from "axios";
+import "./styles/sweetslist.css";
 
 const SweetsList = () => {
+  const [purchaseAlert, setPurchaseAlert] = useState("");
+  const [purchaseMsg, setPurchaseMsg] = useState({});
   const [sweets, setSweets] = useState([]);
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(true);
@@ -32,8 +36,13 @@ const SweetsList = () => {
             : sweet
         )
       );
+      const purchasedSweet = sweets.find((sweet) => sweet._id === sweetId);
+      const newQty = purchasedSweet ? purchasedSweet.quantity - 1 : 0;
+      setPurchaseAlert(`Purchased! Remaining quantity: ${newQty}`);
+      setTimeout(() => setPurchaseAlert(""), 2000);
     } catch (err) {
-      alert(err.response?.data?.message || "Purchase failed");
+      setPurchaseAlert(err.response?.data?.message || "Purchase failed");
+      setTimeout(() => setPurchaseAlert(""), 2000);
     }
   };
 
@@ -45,39 +54,26 @@ const SweetsList = () => {
   if (error) return <div style={{ color: "red" }}>{error}</div>;
 
   return (
-    <div style={{ maxWidth: "900px", margin: "0 auto" }}>
-      <h2>Sweets</h2>
-      <input
-        type="text"
-        placeholder="Search sweets..."
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
-        style={{
-          padding: "8px",
-          marginBottom: "16px",
-          width: "100%",
-          borderRadius: "4px",
-          border: "1px solid #ccc",
-        }}
-      />
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
-          gap: "20px",
-        }}
-      >
+    <div className="main">
+      {purchaseAlert && <div className="purcahseAlert">{purchaseAlert}</div>}
+      <header className="header">
+        <h1 className="heading">Sweet Shop</h1>
+      </header>
+      <div className="searchDiv">
+        <div style={{ position: "relative", width: "50%" }}>
+          <FaSearch className="FaSearch" />
+          <input
+            type="text"
+            placeholder="Search sweets..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            className="searchInput"
+          />
+        </div>
+      </div>
+      <div className="mainGrid">
         {filteredSweets.map((sweet) => (
-          <div
-            key={sweet._id}
-            style={{
-              border: "1px solid #ddd",
-              borderRadius: "8px",
-              padding: "16px",
-              textAlign: "center",
-              boxShadow: "0 2px 8px #eee",
-            }}
-          >
+          <div className="sweetDiv" key={sweet._id}>
             <img
               src={
                 sweet.image
@@ -88,30 +84,28 @@ const SweetsList = () => {
               }
               alt={sweet.name}
               style={{
-                width: "100%",
+                width: "150px",
                 height: "150px",
                 objectFit: "cover",
-                borderRadius: "6px",
+                borderRadius: "10px",
               }}
             />
-            <h3>{sweet.name}</h3>
-            <p>Price: ₹{sweet.price}</p>
-            <p>Quantity: {sweet.quantity}</p>
-            <button
-              onClick={() => handlePurchase(sweet._id)}
-              disabled={sweet.quantity === 0}
-              style={{
-                padding: "8px 16px",
-                background: sweet.quantity === 0 ? "#ccc" : "#007bff",
-                color: "#fff",
-                border: "none",
-                borderRadius: "4px",
-                cursor: sweet.quantity === 0 ? "not-allowed" : "pointer",
-                marginTop: "10px",
-              }}
-            >
-              {sweet.quantity === 0 ? "Out of Stock" : "Purchase"}
-            </button>
+            <div style={{ flex: 1 }}>
+              <h3>{sweet.name}</h3>
+              <p style={{ fontSize: "12px" }}>Price: ₹{sweet.price}</p>
+              {/* <p>Quantity: {sweet.quantity}</p> */}
+              <button
+                onClick={() => handlePurchase(sweet._id)}
+                disabled={sweet.quantity === 0}
+                className="sweetCardButton"
+                style={{
+                  background: sweet.quantity === 0 ? "#ccc" : "#f55095ff",
+                  cursor: sweet.quantity === 0 ? "not-allowed" : "pointer",
+                }}
+              >
+                {sweet.quantity === 0 ? "Out of Stock" : "Purchase"}
+              </button>
+            </div>
           </div>
         ))}
       </div>

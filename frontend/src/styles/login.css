@@ -1,5 +1,18 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;1,300&display=swap");
+
+body {
+  font-family: "Roboto Mono", sans-serif;
+  color: #252525;
+  font-weight: 400;
+  background-color: #f7f2e9;
+  /* border-bottom: 1.6rem solid #edc84b; */
+  /* min-height: 100vh;
+  padding: 3.2rem;
+  padding-bottom: 6rem; */
+}
+
 .loginMain {
-  background-color: rgb(247, 238, 247);
+  /* background-color: #f7f2e9; */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -21,16 +34,16 @@
   text-align: center;
 }
 
-div .loginCardHeading {
+.loginCardHeading {
   font-family: "Inter", Arial, sans-serif;
   font-weight: 700;
-  font-size: 38px;
+  font-size: 38px !important;
   margin-bottom: 24px;
   color: #3b3b3b;
   letter-spacing: -0.5px;
 }
 
-div .loginForm {
+.loginForm {
   width: 100%;
   max-width: 350px;
   display: flex;
@@ -38,7 +51,7 @@ div .loginForm {
   align-items: center;
 }
 
-div .formInput {
+.formInput {
   margin-bottom: 16px;
   width: 100%;
   padding: 12px 14px;
@@ -50,7 +63,7 @@ div .formInput {
   transition: border 0.2s;
 }
 
-div .loginButton {
+.loginButton {
   width: 100%;
   padding: 12px 0;
   /* background: linear-gradient(90deg, #221019 0%, #f8f6f7 100%); */

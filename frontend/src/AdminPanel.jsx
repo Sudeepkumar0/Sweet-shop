@@ -3,6 +3,7 @@ import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { AuthContext } from "./AuthContext";
 import { useNavigate } from "react-router-dom";
+import "./styles/adminpanel.css";
 
 const AdminPanel = ({ adminToken }) => {
   const [userRole, setUserRole] = useState("");
@@ -113,257 +114,194 @@ const AdminPanel = ({ adminToken }) => {
   };
 
   if (userRole !== "admin") return null;
-
   return (
-    <div style={{ maxWidth: "900px", margin: "0 auto" }}>
-      <h2>Admin Panel</h2>
-      <form
-        onSubmit={handleAddSweet}
-        style={{ marginBottom: 24, display: "flex", gap: 8 }}
-      >
-        <input
-          name="name"
-          value={form.name}
-          onChange={handleChange}
-          placeholder="Name"
-          required
-          style={{
-            marginRight: 8,
-            padding: 8,
-            borderRadius: 4,
-            border: "1px solid #ccc",
-          }}
-        />
-        <input
-          name="price"
-          value={form.price}
-          onChange={handleChange}
-          placeholder="Price"
-          required
-          style={{
-            marginRight: 8,
-            padding: 8,
-            borderRadius: 4,
-            border: "1px solid #ccc",
-          }}
-        />
-        <input
-          name="quantity"
-          value={form.quantity}
-          onChange={handleChange}
-          placeholder="Quantity"
-          required
-          style={{
-            marginRight: 8,
-            padding: 8,
-            borderRadius: 4,
-            border: "1px solid #ccc",
-          }}
-        />
-        <input
-          name="category"
-          value={form.category}
-          onChange={handleChange}
-          placeholder="Category"
-          required
-          style={{
-            marginRight: 8,
-            padding: 8,
-            borderRadius: 4,
-            border: "1px solid #ccc",
-          }}
-        />
-        <input
-          type="file"
-          name="image"
-          onChange={handleChange}
-          style={{
-            marginRight: 8,
-            padding: 8,
-            borderRadius: 4,
-            border: "1px solid #ccc",
-          }}
-        />
-        <button
-          type="submit"
-          style={{
-            padding: "8px 16px",
-            background: "#007bff",
-            color: "#fff",
-            border: "none",
-            borderRadius: 4,
-            cursor: "pointer",
-          }}
-        >
-          Add Sweet
-        </button>
+    <div className="adminPanelContainer">
+      <div className="adminPanelTitle">Sweet Shop - Admin Panel</div>
+      <form onSubmit={handleAddSweet}>
+        <div className="adminFormGrid">
+          <input
+            className="adminFormInput"
+            name="name"
+            value={form.name}
+            onChange={handleChange}
+            placeholder="Sweet Name (e.g., Chocolate Truffle)"
+            required
+          />
+          <input
+            className="adminFormInput"
+            name="price"
+            value={form.price}
+            onChange={handleChange}
+            placeholder="Price (e.g., 2.50)"
+            required
+          />
+          <input
+            className="adminFormInput"
+            name="quantity"
+            value={form.quantity}
+            onChange={handleChange}
+            placeholder="Quantity (e.g., 100)"
+            required
+          />
+          <input
+            className="adminFormInput"
+            name="category"
+            value={form.category}
+            onChange={handleChange}
+            placeholder="Category (e.g., Candy, Chocolate)"
+            required
+          />
+          <div className="adminFormFile">
+            <input
+              type="file"
+              name="image"
+              onChange={handleChange}
+              style={{ display: "none" }}
+              id="sweet-image-upload"
+            />
+            <label htmlFor="sweet-image-upload" style={{ cursor: "pointer" }}>
+              Click or drag an image here to upload
+              <br />
+              <span style={{ fontSize: "0.9rem", color: "#888" }}>
+                PNG, JPG, GIF up to 10MB
+              </span>
+              <br />
+              <span style={{ display: "inline-block", marginTop: 12 }}>
+                <button
+                  type="button"
+                  className="adminFormButton"
+                  style={{
+                    background: "#fff0f6",
+                    color: "#f582b2",
+                    boxShadow: "none",
+                    fontWeight: 600,
+                  }}
+                >
+                  Browse Files
+                </button>
+              </span>
+            </label>
+          </div>
+          <button type="submit" className="adminFormButton">
+            Add Sweet
+          </button>
+        </div>
       </form>
       {error && <p style={{ color: "red", marginBottom: 12 }}>{error}</p>}
-      <table style={{ width: "100%", borderCollapse: "collapse" }}>
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Price</th>
-            <th>Quantity</th>
-            <th>Category</th>
-            <th>Image</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {sweets.map((sweet) => (
-            <tr key={sweet._id}>
-              {editingId === sweet._id ? (
-                <>
-                  <td>
-                    <input
-                      name="name"
-                      value={editForm.name}
-                      onChange={handleEditChange}
-                      style={{
-                        padding: 4,
-                        borderRadius: 4,
-                        border: "1px solid #ccc",
-                      }}
-                    />
-                  </td>
-                  <td>
-                    <input
-                      name="price"
-                      value={editForm.price}
-                      onChange={handleEditChange}
-                      style={{
-                        padding: 4,
-                        borderRadius: 4,
-                        border: "1px solid #ccc",
-                      }}
-                    />
-                  </td>
-                  <td>
-                    <input
-                      name="quantity"
-                      value={editForm.quantity}
-                      onChange={handleEditChange}
-                      style={{
-                        padding: 4,
-                        borderRadius: 4,
-                        border: "1px solid #ccc",
-                      }}
-                    />
-                  </td>
-                  <td>
-                    <input
-                      name="category"
-                      value={editForm.category}
-                      onChange={handleEditChange}
-                      style={{
-                        padding: 4,
-                        borderRadius: 4,
-                        border: "1px solid #ccc",
-                      }}
-                    />
-                  </td>
-                  <td>
-                    {sweet.image && (
-                      <img
-                        src={`http://localhost:5000${sweet.image}`}
-                        alt={sweet.name}
-                        style={{
-                          width: 50,
-                          height: 50,
-                          objectFit: "cover",
-                          borderRadius: 6,
-                        }}
-                      />
-                    )}
-                  </td>
-                  <td>
-                    <button
-                      style={{
-                        background: "#28a745",
-                        color: "#fff",
-                        margin: "0 2px",
-                        padding: "4px 8px",
-                        borderRadius: 4,
-                        border: "none",
-                        cursor: "pointer",
-                      }}
-                      onClick={() => handleUpdateSweet(sweet._id)}
-                    >
-                      Update
-                    </button>
-                    <button
-                      style={{
-                        background: "#6c757d",
-                        color: "#fff",
-                        margin: "0 2px",
-                        padding: "4px 8px",
-                        borderRadius: 4,
-                        border: "none",
-                        cursor: "pointer",
-                      }}
-                      onClick={() => setEditingId(null)}
-                    >
-                      Cancel
-                    </button>
-                  </td>
-                </>
-              ) : (
-                <>
-                  <td>{sweet.name}</td>
-                  <td>{sweet.price}</td>
-                  <td>{sweet.quantity}</td>
-                  <td>{sweet.category}</td>
-                  <td>
-                    {sweet.image && (
-                      <img
-                        src={`http://localhost:5000${sweet.image}`}
-                        alt={sweet.name}
-                        style={{
-                          width: 50,
-                          height: 50,
-                          objectFit: "cover",
-                          borderRadius: 6,
-                        }}
-                      />
-                    )}
-                  </td>
-                  <td>
-                    <button
-                      style={{
-                        background: "#ffc107",
-                        color: "#333",
-                        margin: "0 2px",
-                        padding: "4px 8px",
-                        borderRadius: 4,
-                        border: "none",
-                        cursor: "pointer",
-                      }}
-                      onClick={() => startEdit(sweet)}
-                    >
-                      Edit
-                    </button>
-                    <button
-                      style={{
-                        background: "#dc3545",
-                        color: "#fff",
-                        margin: "0 2px",
-                        padding: "4px 8px",
-                        borderRadius: 4,
-                        border: "none",
-                        cursor: "pointer",
-                      }}
-                      onClick={() => handleDelete(sweet._id)}
-                    >
-                      Delete
-                    </button>
-                  </td>
-                </>
-              )}
+      <div className="sweetsListSection">
+        <div className="sweetsListTitle">Sweets List</div>
+        <table className="sweetsTable">
+          <thead>
+            <tr>
+              <th>Image</th>
+              <th>Name</th>
+              <th>Price</th>
+              <th>Quantity</th>
+              <th>Actions</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {sweets.map((sweet) => (
+              <tr key={sweet._id}>
+                <td>
+                  {sweet.image && (
+                    <img
+                      src={`http://localhost:5000${sweet.image}`}
+                      alt={sweet.name}
+                    />
+                  )}
+                </td>
+                {editingId === sweet._id ? (
+                  <>
+                    <td>
+                      <input
+                        className="adminFormInput"
+                        name="name"
+                        value={editForm.name}
+                        onChange={handleEditChange}
+                        placeholder="Sweet Name (e.g., Chocolate Truffle)"
+                        required
+                      />
+                    </td>
+                    <td>
+                      <input
+                        className="adminFormInput"
+                        name="price"
+                        value={editForm.price}
+                        onChange={handleEditChange}
+                        placeholder="Price (e.g., 2.50)"
+                        required
+                        type="number"
+                        min="0"
+                        step="0.01"
+                      />
+                    </td>
+                    <td>
+                      <input
+                        className="adminFormInput"
+                        name="quantity"
+                        value={editForm.quantity}
+                        onChange={handleEditChange}
+                        placeholder="Quantity (e.g., 100)"
+                        required
+                        type="number"
+                        min="0"
+                        step="1"
+                      />
+                    </td>
+                    <td>
+                      <button
+                        className="actionBtn"
+                        title="Update"
+                        onClick={() => handleUpdateSweet(sweet._id)}
+                      >
+                        <span role="img" aria-label="update">
+                          ✅
+                        </span>
+                      </button>
+                      <button
+                        className="actionBtn"
+                        title="Cancel"
+                        onClick={() => setEditingId(null)}
+                      >
+                        <span role="img" aria-label="cancel">
+                          ❌
+                        </span>
+                      </button>
+                    </td>
+                  </>
+                ) : (
+                  <>
+                    <td>{sweet.name}</td>
+                    <td>${parseFloat(sweet.price).toFixed(2)}</td>
+                    <td>{sweet.quantity}</td>
+                    <td>
+                      <button
+                        className="actionBtn"
+                        title="Edit"
+                        onClick={() => startEdit(sweet)}
+                      >
+                        <span role="img" aria-label="edit">
+                          ✏️
+                        </span>
+                      </button>
+                      <button
+                        className="actionBtn"
+                        title="Delete"
+                        onClick={() => handleDelete(sweet._id)}
+                      >
+                        <span role="img" aria-label="delete">
+                          🗑️
+                        </span>
+                      </button>
+                    </td>
+                  </>
+                )}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };
