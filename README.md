@@ -157,15 +157,15 @@ npm run dev
 
 ### Admin Login
 
-![Admin Login](frontend/public/screenshots/admin-login.png)
+![Admin Login](frontend/public/snaps/admin-login.png)
 
 ### User Login
 
-![User Login](frontend/public/screenshots/login.png)
+![User Login](frontend/public/snaps/login.png)
 
 ### User Registration
 
-![User Registration](frontend/public/screenshots/register.png)
+![User Registration](frontend/public/snaps/register.png)
 
 ### Sweets List (User Grid)
 
@@ -343,6 +343,7 @@ API endpoints can also be tested using Postman or similar tools. Example test im
 ---
 
 Co-authored-by: GitHub Copilot <copilot@users.noreply.github.com>
+
 
 
 
