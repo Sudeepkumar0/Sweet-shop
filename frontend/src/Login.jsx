@@ -3,6 +3,7 @@ import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { AuthContext } from "./AuthContext";
+import "./styles/login.css";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -26,56 +27,47 @@ const Login = () => {
   };
 
   return (
-    <div style={{ maxWidth: 400, margin: "0 auto" }}>
-      <h2>Login</h2>
-      <form
-        onSubmit={handleSubmit}
-        style={{ display: "flex", flexDirection: "column" }}
-      >
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-          style={{
-            marginBottom: 8,
-            width: "100%",
-            padding: 8,
-            borderRadius: 4,
-            border: "1px solid #ccc",
-          }}
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-          style={{
-            marginBottom: 8,
-            width: "100%",
-            padding: 8,
-            borderRadius: 4,
-            border: "1px solid #ccc",
-          }}
-        />
-        <button
-          type="submit"
-          style={{
-            width: "100%",
-            padding: 8,
-            background: "#007bff",
-            color: "#fff",
-            border: "none",
-            borderRadius: 4,
-            cursor: "pointer",
-          }}
-        >
-          Login
-        </button>
-      </form>
-      {error && <p style={{ color: "red", marginTop: 8 }}>{error}</p>}
+    <div className="loginMain" style={{}}>
+      <div className="logincard">
+        <h2 className="loginCardHeading">Sweet Shop</h2>
+        <form className="loginForm">
+          <input
+            className="formInput"
+            type="email"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+          <input
+            className="formInput"
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+          <button type="submit" className="loginButton">
+            Login
+          </button>
+        </form>
+        {error && (
+          <p style={{ color: "#ef4444", marginTop: 8, fontWeight: 500 }}>
+            {error}
+          </p>
+        )}
+        <div className="LoginRegisterDiv">
+          <span className="loginSpan">If you are a new user? </span>
+          <a
+            className="LoginRegisterLink"
+            href="/register"
+            onMouseOver={(e) => (e.target.style.color = "#eb2528ff")}
+            onMouseOut={(e) => (e.target.style.color = "#ff4f9d")}
+          >
+            Register
+          </a>
+        </div>
+      </div>
     </div>
   );
 };
