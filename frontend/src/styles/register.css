@@ -1,0 +1,85 @@
+.registerMainDiv {
+  background-color: rgb(247, 238, 247);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+.registerCard {
+  background-color: #fff;
+  padding: 40px 32px 32px 32px;
+  border-radius: 16px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08),
+    0 1.5px 6px rgba(60, 60, 120, 0.08);
+  width: 400px;
+  max-width: 50vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.registerCardHeading {
+  font-family: "Inter", Arial, sans-serif;
+  font-weight: 700;
+  font-size: 28px;
+  margin-bottom: 24px;
+  color: #3b3b3b;
+  letter-spacing: -0.5px;
+}
+
+.formInput {
+  margin-bottom: 16px;
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 8px;
+  border: 1.5px solid #d1d5db;
+  font-size: 16px;
+  background: #f3f4f6;
+  outline: none;
+  transition: border 0.2s;
+}
+
+.registrationButton {
+  width: 100%;
+  padding: 12px 0;
+  background-color: #ff4f9d;
+  color: #fff;
+  font-weight: 600;
+  font-size: 18px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(99, 102, 241, 0.08);
+  margin-bottom: 8px;
+  transition: background 0.2s;
+}
+
+.formInput,
+.registrationButton {
+  width: 100%;
+  max-width: 400px;
+  box-sizing: border-box;
+}
+
+.RegisterLoginDiv {
+  margin-top: 18px;
+  text-align: center;
+}
+
+.loginSpan {
+  color: #555;
+  font-size: 15px;
+}
+
+.RegisterLoginLink {
+  color: #ff4f9d;
+  font-weight: 600;
+  text-decoration: none;
+  margin-left: 4px;
+  font-size: 15px;
+  cursor: pointer;
+  transition: color 0.2s;
+}
