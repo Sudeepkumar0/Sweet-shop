@@ -1,10 +1,10 @@
 ﻿# Sweet Shop Management System
 
-##  Overview
+## Overview
 
 Sweet Shop Management System is a full MERN stack application for managing sweets inventory, purchases, and admin operations. It features role-based access for users (browse & purchase) and admins (CRUD sweets, restock, manage inventory). The app is a single-page application (SPA) with a modern, responsive design.
 
-##  Initial Project Approach
+## Initial Project Approach
 
 - **Goal:** Build a robust, scalable sweet shop management system using the MERN stack.
 - **Step 1:** Design the database schema for sweets, users, and purchases (MongoDB models).
@@ -45,6 +45,18 @@ Sweet Shop Management System is a full MERN stack application for managing sweet
 - Error handling with consistent JSON responses
 - Full test suite (Jest + Supertest for backend APIs)
 - Screenshots of all major flows (sweets list, out-of-stock, purchase, search, admin, MongoDB data)
+
+## My AI Usage
+
+Throughout this project, I leveraged several AI tools to accelerate development, improve code quality, and enhance documentation:
+
+- **GitHub Copilot Pro**: Used for code scaffolding, auto-completion, and generating boilerplate for React components, Express routes, and MongoDB models.
+- **ChatGPT**: Provided step-by-step guidance, code review, debugging help, and assisted in writing documentation and commit messages.
+- **StitchAI**: Helped generate UI layouts and page/component structures for a modern, responsive design.
+- **Gemini**: Used for idea validation, prompt refinement, and brainstorming feature enhancements.
+- **AI Image Generator**: Created custom icons and demo visuals for the app and documentation.
+
+These tools enabled rapid prototyping, reduced manual effort, and ensured best practices throughout the Sweet Shop Management System.
 
 ## Technologies Used
 
@@ -144,7 +156,7 @@ npm run dev
 
 - Open [http://localhost:5173](http://localhost:5173) in your browser
 
-##  Testing
+## Testing
 
 - Backend: Run all tests with Jest & Supertest
   ```bash
@@ -153,7 +165,7 @@ npm run dev
   ```
 - API validation: Use Postman collection in `backend/tests/`
 
-##  Screenshots
+## Screenshots
 
 ### Admin Login
 
@@ -185,19 +197,14 @@ npm run dev
 
 ### Admin Panel – Data Upload
 
-![Admin Panel Image Upload](frontend/public/snaps/adminpanel.png)
-
-### Admin Panel – Data Update
-
-![Admin Panel Image Upload](frontend/public/snaps/adminpanelupdate.png)
-
-
+![Admin Panel Image Upload](frontend/public/screenshots/admin-image-upload.png)
 
 ## Login Endpoints
-  {
-  "email": "your@email.com",
-  "password": "yourpassword"
-  }
+
+{
+"email": "your@email.com",
+"password": "yourpassword"
+}
 
 ````
 
@@ -332,17 +339,6 @@ API endpoints can also be tested using Postman or similar tools. Example test im
 
 ![List Sweets API Test](frontend/public/purchase.png)
 
-
 ---
 
 Co-authored-by: GitHub Copilot <copilot@users.noreply.github.com>
-
-
-## Author
-
-Developed by **G. Sudeep Kumar**
-[sudeepkumar.connect@gmail.com]  
-
-
-
-
