@@ -1,10 +1,10 @@
-﻿# 🍬 Sweet Shop Management System
+﻿# Sweet Shop Management System
 
-## 📌 Overview
+##  Overview
 
 Sweet Shop Management System is a full MERN stack application for managing sweets inventory, purchases, and admin operations. It features role-based access for users (browse & purchase) and admins (CRUD sweets, restock, manage inventory). The app is a single-page application (SPA) with a modern, responsive design.
 
-## 🏗️ Initial Project Approach
+##  Initial Project Approach
 
 - **Goal:** Build a robust, scalable sweet shop management system using the MERN stack.
 - **Step 1:** Design the database schema for sweets, users, and purchases (MongoDB models).
@@ -15,7 +15,7 @@ Sweet Shop Management System is a full MERN stack application for managing sweet
 - **Step 6:** Write tests for backend APIs and validate flows with Postman.
 - **Step 7:** Polish UI/UX and document the project with screenshots and setup instructions.
 
-## 🗄️ Database Design & Storage
+## Database Design & Storage
 
 - **Database:** MongoDB (Community edition)
 - **Collections:**
@@ -25,11 +25,12 @@ Sweet Shop Management System is a full MERN stack application for managing sweet
 - **Image Storage:** Sweet images are uploaded and stored in the `uploads/` directory, with file paths saved in the `sweets` collection.
 - **Seed Data:** Initial sweets data can be loaded using a seed script for demo/testing.
 
-### 📸 Database Snapshot
+### Database Snapshot
 
 ![Users](frontend/public/snaps/mondousers.png)
+![Sweets](frontend/public/snaps/mongo_data.png)
 
-## 🚀 Features
+## Features
 
 - User registration & login with JWT authentication
 - Role-based authorization (user/admin)
@@ -45,7 +46,7 @@ Sweet Shop Management System is a full MERN stack application for managing sweet
 - Full test suite (Jest + Supertest for backend APIs)
 - Screenshots of all major flows (sweets list, out-of-stock, purchase, search, admin, MongoDB data)
 
-## 🛠️ Technologies Used
+## Technologies Used
 
 - **Frontend**: React + Vite (SPA)
 - **Backend**: Node.js, Express.js
@@ -86,7 +87,7 @@ SweetShop/
 └── ...
 ```
 
-## 🏁 Getting Started
+## Getting Started
 
 ### Prerequisites
 
@@ -143,7 +144,7 @@ npm run dev
 
 - Open [http://localhost:5173](http://localhost:5173) in your browser
 
-## 🧪 Testing
+##  Testing
 
 - Backend: Run all tests with Jest & Supertest
   ```bash
@@ -152,27 +153,7 @@ npm run dev
   ```
 - API validation: Use Postman collection in `backend/tests/`
 
-## 🖼️ Screenshots
-
-### Sweets List (User Grid)
-
-![Sweets List](frontend/public/screenshots/sweets-list.png)
-
-### Out-of-Stock Sweet
-
-![Out of Stock](frontend/public/screenshots/out-of-stock.png)
-
-### Purchase Flow
-
-![Purchase Sweet](frontend/public/screenshots/purchase.png)
-
-### Search Sweets
-
-![Search Sweets](frontend/public/screenshots/search.png)
-
-### Admin Panel – Image Upload
-
-![Admin Panel Image Upload](frontend/public/screenshots/admin-image-upload.png)
+##  Screenshots
 
 ### Admin Login
 
@@ -186,9 +167,28 @@ npm run dev
 
 ![User Registration](frontend/public/screenshots/register.png)
 
-### MongoDB Data Storage
+### Sweets List (User Grid)
 
-![MongoDB Snapshot](frontend/public/screenshots/mongodb-snapshot.png)
+![Sweets List](frontend\public\snaps\sweetslist.png)
+
+### Out-of-Stock Sweet
+
+![Out of Stock](frontend\public\snaps\sweetsoutofstock.png)
+
+### Purchase Flow
+
+![Purchase Sweet](frontend\public\snaps\sweetpurcahsed.png)
+
+### Search Sweets
+
+![Search Sweets](frontend\public\snaps\sweetssearch.png)
+
+### Admin Panel – Data Upload
+
+![Admin Panel Image Upload](frontend/public/screenshots/admin-image-upload.png)
+
+
+
 
 ## 🙌 Credits
 
@@ -343,5 +343,6 @@ API endpoints can also be tested using Postman or similar tools. Example test im
 ---
 
 Co-authored-by: GitHub Copilot <copilot@users.noreply.github.com>
+
 
 
