@@ -27,7 +27,7 @@ Sweet Shop Management System is a full MERN stack application for managing sweet
 
 ### 📸 Database Snapshot
 
-E:\SweetShop\frontend\public\snaps\mondousers.png
+![Users](frontend/public/snaps/mondousers.png)
 
 ## 🚀 Features
 
@@ -343,4 +343,5 @@ API endpoints can also be tested using Postman or similar tools. Example test im
 ---
 
 Co-authored-by: GitHub Copilot <copilot@users.noreply.github.com>
+
 
