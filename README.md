@@ -197,7 +197,12 @@ npm run dev
 
 ### Admin Panel – Data Upload
 
-![Admin Panel Image Upload](frontend/public/screenshots/admin-image-upload.png)
+![Admin Panel Image Upload](frontend/public/snaps/adminpanel.png
+
+
+### Admin Panel – Data Upload
+
+![Admin Panel Image Upload](frontend/public/snaps/adminpanelupdate.png)
 
 ## Login Endpoints
 
@@ -342,3 +347,4 @@ API endpoints can also be tested using Postman or similar tools. Example test im
 ---
 
 Co-authored-by: GitHub Copilot <copilot@users.noreply.github.com>
+
