@@ -42,7 +42,7 @@ body {
 
   text-transform: uppercase;
   text-align: center;
-  font-size: 5.2rem;
+  font-size: 6.2rem;
   font-weight: 400;
   letter-spacing: 3px;
   position: relative;
@@ -55,18 +55,18 @@ body {
   display: block;
   content: "";
   height: 3px;
-  width: 12rem;
+  width: 16rem;
   background-color: #f582b2ff;
   position: absolute;
   top: calc(50% - 1px);
 }
 
 .header h1::before {
-  left: 200px;
+  left: 300px;
 }
 
 .header h1::after {
-  right: 200px;
+  right: 300px;
 }
 
 .sweetHeading {
@@ -102,7 +102,7 @@ body {
   border-radius: 4px;
   cursor: pointer;
   margin-top: 16px;
-  width: 120px;
+  width: 150px;
   align-self: center;
   position: relative;
   bottom: 0;
@@ -162,7 +162,7 @@ body {
 .sweetDiv {
   width: 100%;
   max-width: 360px;
-  min-width: 180px;
+  min-width: 200px;
   box-sizing: border-box;
   padding: 24px;
   border-radius: 8px;
