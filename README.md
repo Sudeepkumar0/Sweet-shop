@@ -173,7 +173,7 @@ npm run dev
 
 ### User Login
 
-![User Login](frontend/public/snaps/l.png)
+![User Login](frontend/public/snaps/l .png)
 
 ### User Registration
 
@@ -349,6 +349,7 @@ API endpoints can also be tested using Postman or similar tools. Example test im
 ---
 
 Co-authored-by: GitHub Copilot <copilot@users.noreply.github.com>
+
 
 
 
