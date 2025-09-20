@@ -341,11 +341,14 @@ API endpoints can also be tested using Postman or similar tools. Example test im
 ![Create Sweet API Test](frontend/public/snaps/sweet_add.png)
 
 ### List Sweets Endpoint
+![List_Sweet_API_Test](frontend/public/snaps/listsweet.png)
 
-![List Sweets API Test](frontend/public/snaps/purchase.png)
+### Purchase Sweets Endpoint
+![Purchase Sweets API Test](frontend/public/snaps/purchase.png)
 
 ---
 
 Co-authored-by: GitHub Copilot <copilot@users.noreply.github.com>
+
 
 
