@@ -9,10 +9,10 @@ Sweet Shop Management System is a full MERN stack application for managing sweet
 - **Goal:** Build a robust, scalable sweet shop management system using the MERN stack.
 - **Step 1:** Design the database schema for sweets, users, and purchases (MongoDB models).
 - **Step 2:** Implement backend REST APIs for authentication, sweets CRUD, and purchase logic (Node.js + Express).
-- **Step 3:** Create a modern, responsive frontend SPA (React + Vite) with user and admin modules.
+- **Step 3:** Write tests for backend APIs and validate flows with Postman.
 - **Step 4:** Integrate JWT authentication and role-based access control.
-- **Step 5:** Add image upload for sweets and error handling throughout the app.
-- **Step 6:** Write tests for backend APIs and validate flows with Postman.
+- **Step 5:** Create a modern, responsive frontend SPA (React + Vite) with user and admin modules.
+- **Step 6:** Add image upload for sweets and error handling throughout the app.
 - **Step 7:** Polish UI/UX and document the project with screenshots and setup instructions.
 
 ## Database Design & Storage
@@ -349,6 +349,7 @@ API endpoints can also be tested using Postman or similar tools. Example test im
 ---
 
 Co-authored-by: GitHub Copilot <copilot@users.noreply.github.com>
+
 
 
 
