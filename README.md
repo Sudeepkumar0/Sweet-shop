@@ -342,9 +342,10 @@ API endpoints can also be tested using Postman or similar tools. Example test im
 
 ### List Sweets Endpoint
 
-![List Sweets API Test](frontend/public/purchase.png)
+![List Sweets API Test](frontend/public/snaps/purchase.png)
 
 ---
 
 Co-authored-by: GitHub Copilot <copilot@users.noreply.github.com>
+
 
