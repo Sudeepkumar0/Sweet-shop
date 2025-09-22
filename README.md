@@ -348,7 +348,12 @@ API endpoints can also be tested using Postman or similar tools. Example test im
 
 ---
 
+## Author
+[Sudeep Kumar G](https://github.com/Sudeepkumar0)
+
+
 Co-authored-by: GitHub Copilot <copilot@users.noreply.github.com>
+
 
 
 
