@@ -1,4 +1,10 @@
-import React, { createContext, useReducer, useEffect, useContext } from "react";
+import React, {
+  createContext,
+  useReducer,
+  useEffect,
+  useContext,
+  useRef,
+} from "react";
 import axios from "axios";
 import { AuthContext } from "./AuthContext";
 
@@ -64,13 +70,46 @@ export function CartProvider({ children }) {
     }
   }, []);
 
-  // persist
+  // persist (skip first run to avoid overwriting stored cart on mount)
+  const _persistedInit = useRef(false);
   useEffect(() => {
     try {
+      if (!_persistedInit.current) {
+        _persistedInit.current = true;
+        return;
+      }
       localStorage.setItem("sweetshop_cart", JSON.stringify(state.items));
     } catch (e) {
       // ignore
     }
+  }, [state.items]);
+
+  // ensure saved on unload and sync across tabs
+  useEffect(() => {
+    const save = () => {
+      try {
+        localStorage.setItem("sweetshop_cart", JSON.stringify(state.items));
+      } catch (e) {}
+    };
+
+    const onStorage = (e) => {
+      if (e.key === "sweetshop_cart") {
+        try {
+          const val = e.newValue ? JSON.parse(e.newValue) : [];
+          // only hydrate if different
+          const current = JSON.stringify(state.items || []);
+          const incoming = JSON.stringify(val || []);
+          if (current !== incoming) dispatch({ type: "HYDRATE", payload: val });
+        } catch (err) {}
+      }
+    };
+
+    window.addEventListener("beforeunload", save);
+    window.addEventListener("storage", onStorage);
+    return () => {
+      window.removeEventListener("beforeunload", save);
+      window.removeEventListener("storage", onStorage);
+    };
   }, [state.items]);
 
   const addItem = (item) => {
