@@ -136,6 +136,10 @@ export default function NavBar() {
           Favorites
         </Link>
 
+        <Link to="/contact" className="nav-item" onClick={() => setOpen(false)}>
+          Contact
+        </Link>
+
         {token ? (
           <button
             className="nav-item nav-cta"
