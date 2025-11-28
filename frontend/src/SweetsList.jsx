@@ -51,13 +51,33 @@ function FavoriteIcon({ sweetId }) {
   const [fav, setFav] = useState(false);
 
   useEffect(() => {
-    try {
-      const raw = localStorage.getItem("sweetshop_favs");
-      const favs = raw ? JSON.parse(raw) : [];
-      setFav(favs.includes(sweetId));
-    } catch (e) {
-      setFav(false);
-    }
+    const read = () => {
+      try {
+        const raw = localStorage.getItem("sweetshop_favs");
+        const favs = raw ? JSON.parse(raw) : [];
+        setFav(favs.includes(sweetId));
+      } catch (e) {
+        setFav(false);
+      }
+    };
+
+    // initial read
+    read();
+
+    // listen for custom events (same-window updates)
+    const handler = () => read();
+    window.addEventListener("favoritesUpdated", handler);
+
+    // also listen for storage events (other tabs)
+    const storageHandler = (e) => {
+      if (e.key === "sweetshop_favs") read();
+    };
+    window.addEventListener("storage", storageHandler);
+
+    return () => {
+      window.removeEventListener("favoritesUpdated", handler);
+      window.removeEventListener("storage", storageHandler);
+    };
   }, [sweetId]);
 
   const toggle = () => {
@@ -73,6 +93,8 @@ function FavoriteIcon({ sweetId }) {
         setFav(true);
       }
       localStorage.setItem("sweetshop_favs", JSON.stringify(next));
+      // notify other components in same tab
+      window.dispatchEvent(new Event("favoritesUpdated"));
     } catch (e) {
       // ignore
     }

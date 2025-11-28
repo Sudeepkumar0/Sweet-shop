@@ -1,112 +1,116 @@
 import React, { useContext } from "react";
 import { CartContext } from "./CartContext";
+import "./styles/cart.css";
 
 export default function Cart() {
   const { items, removeItem, updateQty, clear } = useContext(CartContext);
 
   const total = items.reduce((s, i) => s + i.price * (i.quantity || 1), 0);
 
-  if (!items || items.length === 0)
-    return (
-      <main style={{ padding: "1rem" }}>
-        <h2>My box</h2>
-        <p>Your box is empty.</p>
-      </main>
-    );
-
   return (
-    <main style={{ padding: "1rem" }}>
-      <h2>My box</h2>
-      <ul style={{ listStyle: "none", padding: 0 }}>
-        {items.map((it) => (
-          <li
-            key={it._id}
-            style={{
-              display: "flex",
-              gap: 12,
-              marginBottom: 12,
-              alignItems: "center",
-            }}
-          >
-            <img
-              src={it.image || "https://via.placeholder.com/80"}
-              alt={it.name}
-              style={{
-                width: 80,
-                height: 80,
-                objectFit: "cover",
-                borderRadius: 6,
-              }}
-            />
-            <div style={{ flex: 1 }}>
-              <div style={{ fontWeight: 700 }}>{it.name}</div>
-              <div style={{ fontSize: 13, color: "#666" }}>
-                ₹{it.price} • Qty:
-                <button
-                  onClick={() =>
-                    updateQty(it._id, Math.max(1, (it.quantity || 1) - 1))
-                  }
-                  style={{ marginLeft: 8 }}
-                >
-                  -
-                </button>
-                <span style={{ margin: "0 8px" }}>{it.quantity}</span>
-                <button
-                  onClick={() => updateQty(it._id, (it.quantity || 1) + 1)}
-                >
-                  +
-                </button>
-              </div>
+    <main className="cart-page">
+      <div className="cart-wrap">
+        <section className="cart-left">
+          <h2>My box</h2>
+
+          <div className="cart-table">
+            <div className="cart-row cart-head">
+              <div className="col col-product">Product</div>
+              <div className="col col-remove"></div>
+              <div className="col col-price">Price</div>
+              <div className="col col-qty">Quantity</div>
+              <div className="col col-total">Total</div>
             </div>
-            <div style={{ textAlign: "right" }}>
-              <div style={{ fontWeight: 700 }}>
-                ₹{(it.price * (it.quantity || 1)).toFixed(2)}
-              </div>
+
+            {(!items || items.length === 0) && (
+              <div className="empty">Your box is empty.</div>
+            )}
+
+            {items &&
+              items.map((it) => (
+                <div className="cart-row" key={it._id}>
+                  <div className="col col-product">
+                    <img
+                      src={it.image || "https://via.placeholder.com/100"}
+                      alt={it.name}
+                      className="prod-thumb"
+                    />
+                    <div className="prod-meta">
+                      <div className="prod-name">{it.name}</div>
+                      <div className="prod-desc">₹{it.price}</div>
+                    </div>
+                  </div>
+
+                  <div className="col col-remove">
+                    <button
+                      className="text-remove"
+                      onClick={() => removeItem(it._id)}
+                    >
+                      Remove
+                    </button>
+                  </div>
+
+                  <div className="col col-price">₹{it.price}</div>
+
+                  <div className="col col-qty">
+                    <div className="qty-control">
+                      <button
+                        onClick={() =>
+                          updateQty(it._id, Math.max(1, (it.quantity || 1) - 1))
+                        }
+                      >
+                        -
+                      </button>
+                      <span>{it.quantity}</span>
+                      <button
+                        onClick={() =>
+                          updateQty(it._id, (it.quantity || 1) + 1)
+                        }
+                      >
+                        +
+                      </button>
+                    </div>
+                  </div>
+
+                  <div className="col col-total">
+                    <div className="row-total">
+                      ₹{(it.price * (it.quantity || 1)).toFixed(2)}
+                    </div>
+                  </div>
+                </div>
+              ))}
+          </div>
+        </section>
+
+        <aside className="cart-right">
+          <div className="summary">
+            <h3>Order Summary</h3>
+            <div className="summary-row">
+              <span>Items</span>
+              <span>{items.length}</span>
+            </div>
+            <div className="summary-row">
+              <span>Subtotal</span>
+              <span>₹{total.toFixed(2)}</span>
+            </div>
+            <div className="summary-row">
+              <span>Shipping</span>
+              <span>Free</span>
+            </div>
+            <div className="summary-total">
+              <span>Total</span>
+              <span>₹{total.toFixed(2)}</span>
+            </div>
+            <div style={{ marginTop: 12 }}>
               <button
-                onClick={() => removeItem(it._id)}
-                style={{
-                  marginTop: 6,
-                  color: "#c00",
-                  background: "transparent",
-                  border: "none",
-                }}
+                className="checkout-btn"
+                onClick={() => (window.location.href = "/checkout")}
               >
-                Remove
+                Go to Checkout
               </button>
             </div>
-          </li>
-        ))}
-      </ul>
-
-      <div
-        style={{
-          marginTop: 12,
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-        }}
-      >
-        <div style={{ fontSize: 18, fontWeight: 700 }}>
-          Total: ₹{total.toFixed(2)}
-        </div>
-        <div style={{ display: "flex", gap: 8 }}>
-          <button onClick={() => clear()} style={{ padding: "8px 12px" }}>
-            Clear
-          </button>
-          <a
-            href="/checkout"
-            className="btn-primary"
-            style={{
-              padding: "8px 12px",
-              textDecoration: "none",
-              background: "#ff6b95",
-              color: "#fff",
-              borderRadius: 6,
-            }}
-          >
-            Checkout
-          </a>
-        </div>
+          </div>
+        </aside>
       </div>
     </main>
   );
