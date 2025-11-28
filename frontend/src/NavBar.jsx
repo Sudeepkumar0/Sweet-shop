@@ -2,6 +2,16 @@ import React, { useState, useContext, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "./AuthContext";
 import { CartContext } from "./CartContext";
+import {
+  FaCandyCane,
+  FaInfoCircle,
+  FaBoxOpen,
+  FaCreditCard,
+  FaHeart,
+  FaEnvelope,
+  FaSignInAlt,
+  FaSignOutAlt,
+} from "react-icons/fa";
 import "./styles/navbar.css";
 
 export default function NavBar() {
@@ -44,6 +54,9 @@ export default function NavBar() {
           Sweets
         </Link>
         <Link to="/about" className="nav-item" onClick={() => setOpen(false)}>
+          <span className="nav-icon">
+            <FaInfoCircle />
+          </span>
           About
         </Link>
         <div
@@ -58,6 +71,9 @@ export default function NavBar() {
             }}
             className="nav-item"
           >
+            <span className="nav-icon">
+              <FaBoxOpen />
+            </span>
             My box
             {count > 0 && (
               <span
@@ -126,6 +142,9 @@ export default function NavBar() {
           className="nav-item"
           onClick={() => setOpen(false)}
         >
+          <span className="nav-icon">
+            <FaCreditCard />
+          </span>
           Checkout
         </Link>
         <Link
@@ -133,10 +152,16 @@ export default function NavBar() {
           className="nav-item"
           onClick={() => setOpen(false)}
         >
+          <span className="nav-icon">
+            <FaHeart />
+          </span>
           Favorites
         </Link>
 
         <Link to="/contact" className="nav-item" onClick={() => setOpen(false)}>
+          <span className="nav-icon">
+            <FaEnvelope />
+          </span>
           Contact
         </Link>
 
@@ -148,6 +173,9 @@ export default function NavBar() {
               setOpen(false);
             }}
           >
+            <span className="nav-icon">
+              <FaSignOutAlt />
+            </span>
             Logout
           </button>
         ) : (
@@ -156,6 +184,9 @@ export default function NavBar() {
             className="nav-item nav-cta"
             onClick={() => setOpen(false)}
           >
+            <span className="nav-icon">
+              <FaSignInAlt />
+            </span>
             Login
           </Link>
         )}
