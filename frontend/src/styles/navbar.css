@@ -54,6 +54,19 @@
   border-radius: 6px;
 }
 
+.nav-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.nav-icon {
+  display: inline-flex;
+  width: 18px;
+  height: 18px;
+  align-items: center;
+  justify-content: center;
+}
+
 .cart-badge {
   display: inline-block;
   background: #ff6b95;

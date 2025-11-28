@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { AuthContext } from "./AuthContext";
 import { CartContext } from "./CartContext";
 import {
-  FaCandyCane,
   FaInfoCircle,
   FaBoxOpen,
   FaCreditCard,
@@ -11,6 +10,7 @@ import {
   FaEnvelope,
   FaSignInAlt,
   FaSignOutAlt,
+  FaUserCircle,
 } from "react-icons/fa";
 import "./styles/navbar.css";
 
@@ -158,13 +158,6 @@ export default function NavBar() {
           Favorites
         </Link>
 
-        <Link to="/contact" className="nav-item" onClick={() => setOpen(false)}>
-          <span className="nav-icon">
-            <FaEnvelope />
-          </span>
-          Contact
-        </Link>
-
         {token ? (
           <button
             className="nav-item nav-cta"
@@ -188,6 +181,18 @@ export default function NavBar() {
               <FaSignInAlt />
             </span>
             Login
+          </Link>
+        )}
+        {token && (
+          <Link
+            to="/profile"
+            className="nav-item"
+            onClick={() => setOpen(false)}
+          >
+            <span className="nav-icon">
+              <FaUserCircle />
+            </span>
+            Profile
           </Link>
         )}
       </nav>

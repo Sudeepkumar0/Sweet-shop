@@ -1,7 +1,33 @@
-import React from "react";
+import React, { useState } from "react";
 import "./styles/about.css";
 
 export default function About() {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [message, setMessage] = useState("");
+  const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState("");
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setError("");
+    if (!email || !message) {
+      setError("Please provide your email and a short message.");
+      return;
+    }
+
+    const subject = encodeURIComponent(
+      `Inquiry from SweetShop website - ${name || "Visitor"}`
+    );
+    const body = encodeURIComponent(
+      `${message}\n\n---\nName: ${name || "(not provided)"}\nEmail: ${email}`
+    );
+
+    // attempt to open user's mail client
+    window.location.href = `mailto:hello@sweetshop.example?subject=${subject}&body=${body}`;
+    setSubmitted(true);
+  };
+
   return (
     <main className="about-page">
       <section className="about-hero">
@@ -50,9 +76,9 @@ export default function About() {
             <p>
               <strong>Address:</strong>
               <br />
-              123 Sugar Lane
+              Sai Mistrywood layout
               <br />
-              Candyville, CA 90210
+              Yalahanka, Bangalore - 560064
             </p>
 
             <p>
@@ -128,6 +154,51 @@ export default function About() {
           <a className="btn-primary" href="/sweets">
             Shop Now
           </a>
+        </div>
+        <div className="container about-contact-footer">
+          <h4>Contact Us</h4>
+          <form className="about-contact-form" onSubmit={handleSubmit}>
+            <div className="form-row">
+              <input
+                type="text"
+                name="name"
+                placeholder="Your name (optional)"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+              />
+              <input
+                type="email"
+                name="email"
+                placeholder="Your email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+            </div>
+            <div>
+              <textarea
+                name="message"
+                placeholder="Write a short message (order inquiry, question...)"
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
+                required
+              />
+            </div>
+            {error && <div className="form-error">{error}</div>}
+            {submitted && (
+              <div className="form-success">
+                Your email client should open now.
+              </div>
+            )}
+            <div className="form-actions">
+              <button type="submit" className="btn-primary">
+                Send Message
+              </button>
+              <small className="contact-note">
+                Or email hello@sweetshop.example
+              </small>
+            </div>
+          </form>
         </div>
       </footer>
     </main>

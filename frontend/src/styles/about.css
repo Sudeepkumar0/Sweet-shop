@@ -103,6 +103,87 @@ blockquote cite {
   border-top: 1px solid #f3e7e3;
 }
 
+.about-contact-footer {
+  margin-top: 1rem;
+  padding-top: 0.75rem;
+  border-top: 1px dashed #f3e7e3;
+}
+
+.about-contact-form {
+  display: block;
+  margin-top: 0.5rem;
+}
+
+.about-contact-form {
+  display: block;
+  margin-top: 0.5rem;
+  border: 1px solid #f2e8e6; /* outer border for the form */
+  padding: 0.75rem;
+  border-radius: 8px;
+  background: #fff; /* keep form background white */
+}
+
+.about-contact-form .form-row {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.about-contact-form input,
+.about-contact-form textarea {
+  padding: 0.5rem;
+  border: 1px solid #e9dddd; /* stronger input border */
+  border-radius: 6px;
+  font-size: 0.95rem;
+  background: #fff;
+}
+
+.about-contact-form .form-row input {
+  flex: 1 1 0;
+}
+
+.about-contact-form textarea {
+  min-height: 80px;
+  resize: vertical;
+}
+
+/* add top margin above the message box and match form background to site */
+.about-contact-form textarea {
+  margin-top: 0.6rem;
+}
+
+.about-contact-form {
+  background: #fff7f0; /* match site cream background */
+}
+
+.about-contact-form input:focus,
+.about-contact-form textarea:focus {
+  outline: none;
+  border-color: #ff6b95;
+  box-shadow: 0 0 0 4px rgba(255, 107, 149, 0.06);
+}
+
+.about-contact-form .form-actions {
+  margin-top: 0.5rem;
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.about-contact-form .contact-note {
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.form-error {
+  color: #b00020;
+  margin-top: 0.5rem;
+}
+
+.form-success {
+  color: #0a8a3a;
+  margin-top: 0.5rem;
+}
+
 .btn-primary,
 .btn-secondary {
   display: inline-block;
