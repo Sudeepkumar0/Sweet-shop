@@ -1,0 +1,88 @@
+/* Simple responsive navbar styles */
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #fff7f0;
+  padding: 0.5rem 1rem;
+  border-bottom: 1px solid #f0e6e0;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+.nav-left {
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: #333;
+  font-weight: 700;
+}
+
+.logo-emoji {
+  font-size: 1.4rem;
+  margin-right: 0.5rem;
+}
+
+.logo-text {
+  font-size: 1rem;
+}
+
+.menu-toggle {
+  display: none;
+  background: transparent;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+.nav-links {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.nav-item {
+  text-decoration: none;
+  color: #333;
+  padding: 0.4rem 0.6rem;
+  border-radius: 6px;
+}
+
+.nav-item:hover {
+  background: #fff0e6;
+}
+
+.nav-cta {
+  background: #ff8ba7;
+  color: white !important;
+  padding: 0.4rem 0.7rem;
+}
+
+@media (max-width: 720px) {
+  .menu-toggle {
+    display: block;
+  }
+
+  .nav-links {
+    position: absolute;
+    right: 1rem;
+    top: 56px;
+    flex-direction: column;
+    background: white;
+    border: 1px solid #eee;
+    padding: 0.5rem;
+    display: none;
+    min-width: 160px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+  }
+
+  .nav-links.open {
+    display: flex;
+  }
+}
