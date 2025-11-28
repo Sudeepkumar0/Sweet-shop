@@ -1,9 +1,20 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { CartContext } from "./CartContext";
 import "./styles/cart.css";
 
 export default function Cart() {
   const { items, removeItem, updateQty, clear } = useContext(CartContext);
+  const [removingIds, setRemovingIds] = useState([]);
+
+  function handleRemove(id) {
+    if (removingIds.includes(id)) return;
+    setRemovingIds((s) => [...s, id]);
+    // allow animation to play before removing from context
+    setTimeout(() => {
+      removeItem(id);
+      setRemovingIds((s) => s.filter((x) => x !== id));
+    }, 240);
+  }
 
   const total = items.reduce((s, i) => s + i.price * (i.quantity || 1), 0);
 
@@ -28,7 +39,12 @@ export default function Cart() {
 
             {items &&
               items.map((it) => (
-                <div className="cart-row" key={it._id}>
+                <div
+                  className={`cart-row ${
+                    removingIds.includes(it._id) ? "removing" : ""
+                  }`}
+                  key={it._id}
+                >
                   <div className="col col-product">
                     <img
                       src={it.image || "https://via.placeholder.com/100"}
@@ -38,15 +54,68 @@ export default function Cart() {
                     <div className="prod-meta">
                       <div className="prod-name">{it.name}</div>
                       <div className="prod-desc">₹{it.price}</div>
+                      <button
+                        className="text-remove mobile-remove"
+                        onClick={() => handleRemove(it._id)}
+                        aria-label="Remove item"
+                      >
+                        {/* small text fallback for mobile */}
+                        Remove
+                      </button>
                     </div>
                   </div>
 
                   <div className="col col-remove">
                     <button
                       className="text-remove"
-                      onClick={() => removeItem(it._id)}
+                      onClick={() => handleRemove(it._id)}
+                      aria-label="Remove item"
                     >
-                      Remove
+                      <svg
+                        className="remove-icon"
+                        viewBox="0 0 24 24"
+                        width="16"
+                        height="16"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                        aria-hidden
+                      >
+                        <path
+                          d="M3 6h18"
+                          stroke="#ff6b95"
+                          strokeWidth="1.6"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                        <path
+                          d="M8 6v12a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2V6"
+                          stroke="#ff6b95"
+                          strokeWidth="1.6"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                        <path
+                          d="M10 11v6"
+                          stroke="#ff6b95"
+                          strokeWidth="1.6"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                        <path
+                          d="M14 11v6"
+                          stroke="#ff6b95"
+                          strokeWidth="1.6"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                        <path
+                          d="M9 6l1-2h4l1 2"
+                          stroke="#ff6b95"
+                          strokeWidth="1.6"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                      </svg>
                     </button>
                   </div>
 
