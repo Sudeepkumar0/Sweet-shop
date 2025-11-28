@@ -6,6 +6,7 @@ import {
   Navigate,
 } from "react-router-dom";
 import { AuthProvider } from "./AuthContext";
+import { CartProvider } from "./CartContext";
 import Login from "./Login.jsx";
 import Register from "./Register.jsx";
 import SweetsList from "./SweetsList.jsx";
@@ -24,28 +25,30 @@ function App() {
   );
   return (
     <AuthProvider>
-      <Router>
-        <NavBar />
-        <Routes>
-          <Route path="/" element={<Navigate to="/sweets" replace />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/sweets" element={<SweetsList />} />
-          <Route path="/search" element={<Search />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/cart" element={<Cart />} />
-          <Route path="/checkout" element={<Checkout />} />
-          <Route path="/favorites" element={<Favorites />} />
-          <Route
-            path="/admin-login"
-            element={<AdminLogin setAdminToken={setAdminToken} />}
-          />
-          <Route
-            path="/admin"
-            element={<AdminPanel adminToken={adminToken} />}
-          />
-        </Routes>
-      </Router>
+      <CartProvider>
+        <Router>
+          <NavBar />
+          <Routes>
+            <Route path="/" element={<Navigate to="/sweets" replace />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/sweets" element={<SweetsList />} />
+            <Route path="/search" element={<Search />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/cart" element={<Cart />} />
+            <Route path="/checkout" element={<Checkout />} />
+            <Route path="/favorites" element={<Favorites />} />
+            <Route
+              path="/admin-login"
+              element={<AdminLogin setAdminToken={setAdminToken} />}
+            />
+            <Route
+              path="/admin"
+              element={<AdminPanel adminToken={adminToken} />}
+            />
+          </Routes>
+        </Router>
+      </CartProvider>
     </AuthProvider>
   );
 }

@@ -36,3 +36,7 @@ app.use("/api/sweets", sweetsRoutes);
 // Inventory routes
 const inventoryRoutes = require("./routes/inventory.routes");
 app.use("/api/inventory", inventoryRoutes);
+
+// Cart routes
+const cartRoutes = require("./routes/cart.routes");
+app.use("/api/cart", cartRoutes);

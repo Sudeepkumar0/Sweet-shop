@@ -1,8 +1,94 @@
 // ...existing code...
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { FaSearch } from "react-icons/fa";
 import axios from "axios";
 import "./styles/sweetslist.css";
+import { CartContext } from "./CartContext";
+import { FaHeart, FaRegHeart } from "react-icons/fa";
+
+function AddToBoxButton({ sweet }) {
+  const { addItem } = useContext(CartContext);
+  const [added, setAdded] = useState(false);
+
+  const image = sweet.image
+    ? `http://localhost:5000${sweet.image}`
+    : sweet.imageUrl || "";
+
+  const handleAdd = () => {
+    if (sweet.quantity === 0) return;
+    addItem({
+      _id: sweet._id,
+      name: sweet.name,
+      price: sweet.price,
+      image,
+      quantity: 1,
+    });
+    setAdded(true);
+    setTimeout(() => setAdded(false), 900);
+  };
+
+  return (
+    <button
+      onClick={handleAdd}
+      disabled={sweet.quantity === 0}
+      className={`addBoxButton ${added ? "added" : ""}`}
+      style={{
+        background: sweet.quantity === 0 ? "#ddd" : "#f55095ff",
+        cursor: sweet.quantity === 0 ? "not-allowed" : "pointer",
+        width: 110,
+        border: "none",
+        borderRadius: 6,
+        fontWeight: 600,
+        transition: "transform 220ms ease, box-shadow 220ms ease",
+      }}
+    >
+      {added ? "Added" : "Add to Box"}
+    </button>
+  );
+}
+
+function FavoriteIcon({ sweetId }) {
+  const [fav, setFav] = useState(false);
+
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem("sweetshop_favs");
+      const favs = raw ? JSON.parse(raw) : [];
+      setFav(favs.includes(sweetId));
+    } catch (e) {
+      setFav(false);
+    }
+  }, [sweetId]);
+
+  const toggle = () => {
+    try {
+      const raw = localStorage.getItem("sweetshop_favs");
+      const favs = raw ? JSON.parse(raw) : [];
+      let next;
+      if (favs.includes(sweetId)) {
+        next = favs.filter((id) => id !== sweetId);
+        setFav(false);
+      } else {
+        next = [...favs, sweetId];
+        setFav(true);
+      }
+      localStorage.setItem("sweetshop_favs", JSON.stringify(next));
+    } catch (e) {
+      // ignore
+    }
+  };
+
+  return (
+    <button
+      onClick={toggle}
+      aria-label="favorite"
+      className="fav-icon"
+      style={{ background: "transparent", border: "none" }}
+    >
+      {fav ? <FaHeart color="#ff6b95" /> : <FaRegHeart color="#666" />}
+    </button>
+  );
+}
 
 const SweetsList = () => {
   const [purchaseAlert, setPurchaseAlert] = useState("");
@@ -94,17 +180,19 @@ const SweetsList = () => {
               <h3>{sweet.name}</h3>
               <p style={{ fontSize: "12px" }}>Price: ₹{sweet.price}</p>
               {/* <p>Quantity: {sweet.quantity}</p> */}
-              <button
-                onClick={() => handlePurchase(sweet._id)}
-                disabled={sweet.quantity === 0}
-                className="sweetCardButton"
+              <div
                 style={{
-                  background: sweet.quantity === 0 ? "#ccc" : "#f55095ff",
-                  cursor: sweet.quantity === 0 ? "not-allowed" : "pointer",
+                  display: "flex",
+                  gap: "8px",
+                  justifyContent: "center",
+                  marginTop: 12,
                 }}
               >
-                {sweet.quantity === 0 ? "Out of Stock" : "Purchase"}
-              </button>
+                <AddToBoxButton sweet={sweet} />
+                <div style={{ display: "flex", alignItems: "center" }}>
+                  <FavoriteIcon sweetId={sweet._id} />
+                </div>
+              </div>
             </div>
           </div>
         ))}

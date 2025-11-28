@@ -31,10 +31,10 @@ export default function About() {
 
             <h3>Owner</h3>
             <p>
-              <strong>[Owner Name]</strong> — Founder & Head Pastry Chef.
-              Trained in artisanal baking and pastry arts, [Owner Name] brings
-              over X years of experience creating pastries, chocolates and
-              custom desserts for events.
+              <strong>Sudeep</strong> — Founder & Head Pastry Chef. Trained in
+              artisanal baking and pastry arts, Sudeep brings over X years of
+              experience creating pastries, chocolates and custom desserts for
+              events.
             </p>
 
             <h3>Our Team</h3>
