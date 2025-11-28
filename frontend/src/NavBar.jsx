@@ -39,9 +39,7 @@ export default function NavBar() {
       </button>
 
       <nav className={`nav-links ${open ? "open" : ""}`}>
-        <Link to="/" className="nav-item" onClick={() => setOpen(false)}>
-          Home
-        </Link>
+        {/* Home link removed per user request */}
         <Link to="/sweets" className="nav-item" onClick={() => setOpen(false)}>
           Sweets
         </Link>
