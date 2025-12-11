@@ -1,10 +1,4 @@
-import React, {
-  createContext,
-  useReducer,
-  useEffect,
-  useContext,
-  useRef,
-} from "react";
+import React, { createContext, useReducer, useEffect, useContext } from "react";
 import axios from "axios";
 import { AuthContext } from "./AuthContext";
 
@@ -60,108 +54,146 @@ export function CartProvider({ children }) {
   const [state, dispatch] = useReducer(reducer, initialState);
   const { token } = useContext(AuthContext);
 
-  // hydrate from localStorage
+  // Hydrate cart from DB when user logs in or token changes
   useEffect(() => {
-    try {
-      const raw = localStorage.getItem("sweetshop_cart");
-      if (raw) dispatch({ type: "HYDRATE", payload: JSON.parse(raw) });
-    } catch (e) {
-      // ignore
+    if (!token) {
+      // No token = not logged in, clear cart
+      dispatch({ type: "HYDRATE", payload: [] });
+      return;
     }
-  }, []);
 
-  // persist (skip first run to avoid overwriting stored cart on mount)
-  const _persistedInit = useRef(false);
-  useEffect(() => {
-    try {
-      if (!_persistedInit.current) {
-        _persistedInit.current = true;
-        return;
-      }
-      localStorage.setItem("sweetshop_cart", JSON.stringify(state.items));
-    } catch (e) {
-      // ignore
-    }
-  }, [state.items]);
-
-  // ensure saved on unload and sync across tabs
-  useEffect(() => {
-    const save = () => {
+    // Fetch cart from DB for authenticated user
+    const fetchCart = async () => {
       try {
-        localStorage.setItem("sweetshop_cart", JSON.stringify(state.items));
-      } catch (e) {}
-    };
-
-    const onStorage = (e) => {
-      if (e.key === "sweetshop_cart") {
-        try {
-          const val = e.newValue ? JSON.parse(e.newValue) : [];
-          // only hydrate if different
-          const current = JSON.stringify(state.items || []);
-          const incoming = JSON.stringify(val || []);
-          if (current !== incoming) dispatch({ type: "HYDRATE", payload: val });
-        } catch (err) {}
+        const res = await axios.get("/api/cart", {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        const items = (res.data || []).map((it) => ({
+          ...it,
+          _id: it._id || it.sweetId || it.id,
+        }));
+        dispatch({ type: "HYDRATE", payload: items });
+      } catch (err) {
+        console.error("Failed to fetch cart from database:", err.message);
+        dispatch({ type: "HYDRATE", payload: [] });
       }
     };
 
-    window.addEventListener("beforeunload", save);
-    window.addEventListener("storage", onStorage);
-    return () => {
-      window.removeEventListener("beforeunload", save);
-      window.removeEventListener("storage", onStorage);
-    };
-  }, [state.items]);
+    fetchCart();
+  }, [token]);
 
   const addItem = (item) => {
-    const payload = { ...item, quantity: item.quantity || 1 };
-    dispatch({ type: "ADD_ITEM", payload });
-    if (token) {
-      const id = payload._id || payload.sweetId || payload.id;
-      axios
-        .post(
-          "/api/cart/item",
-          { id, quantity: payload.quantity },
-          { headers: { Authorization: `Bearer ${token}` } }
-        )
-        .catch(() => {});
+    if (!token) {
+      console.warn("User must be logged in to add items to cart");
+      return false;
     }
+
+    const payload = { ...item, quantity: item.quantity || 1 };
+    const id = payload._id || payload.sweetId || payload.id;
+
+    // Optimistic update (add to UI immediately)
+    dispatch({ type: "ADD_ITEM", payload });
+
+    // Sync to DB
+    axios
+      .post(
+        "/api/cart/item",
+        { id, quantity: payload.quantity },
+        { headers: { Authorization: `Bearer ${token}` } }
+      )
+      .then((res) => {
+        // Hydrate from server response to keep in sync
+        const items = (res.data || []).map((it) => ({
+          ...it,
+          _id: it._id || it.sweetId || it.id,
+        }));
+        dispatch({ type: "HYDRATE", payload: items });
+      })
+      .catch((err) => {
+        console.error("Failed to add item to database cart:", err.message);
+      });
+
+    return true;
+  };
+
+  const removeItem = (id) => {
+    if (!token) {
+      console.warn("User must be logged in to remove items from cart");
+      return;
+    }
+
+    // Optimistic update
+    dispatch({ type: "REMOVE_ITEM", payload: id });
+
+    // Sync to DB
+    axios
+      .delete(`/api/cart/item/${id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((res) => {
+        // Hydrate from server response
+        const items = (res.data || []).map((it) => ({
+          ...it,
+          _id: it._id || it.sweetId || it.id,
+        }));
+        dispatch({ type: "HYDRATE", payload: items });
+      })
+      .catch((err) => {
+        console.error("Failed to remove item from database cart:", err.message);
+      });
+  };
+
+  const updateQty = (id, qty) => {
+    if (!token) {
+      console.warn("User must be logged in to update cart");
+      return;
+    }
+
+    // Optimistic update
+    dispatch({ type: "UPDATE_QTY", payload: { id, qty } });
+
+    // Sync to DB
+    axios
+      .post(
+        "/api/cart/item",
+        { id, quantity: qty },
+        { headers: { Authorization: `Bearer ${token}` } }
+      )
+      .then((res) => {
+        // Hydrate from server response
+        const items = (res.data || []).map((it) => ({
+          ...it,
+          _id: it._id || it.sweetId || it.id,
+        }));
+        dispatch({ type: "HYDRATE", payload: items });
+      })
+      .catch((err) => {
+        console.error("Failed to update cart item quantity:", err.message);
+      });
+  };
+
+  const clear = () => {
+    if (!token) {
+      console.warn("User must be logged in to clear cart");
+      return;
+    }
+
+    // Optimistic update
+    dispatch({ type: "CLEAR" });
+
+    // Sync to DB
+    axios
+      .delete("/api/cart", {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .catch((err) => {
+        console.error("Failed to clear cart:", err.message);
+      });
   };
 
   const hydrate = (items) => dispatch({ type: "HYDRATE", payload: items });
 
-  const removeItem = (id) => {
-    dispatch({ type: "REMOVE_ITEM", payload: id });
-    if (token) {
-      axios
-        .delete(`/api/cart/item/${id}`, {
-          headers: { Authorization: `Bearer ${token}` },
-        })
-        .catch(() => {});
-    }
-  };
-
-  const updateQty = (id, qty) => {
-    dispatch({ type: "UPDATE_QTY", payload: { id, qty } });
-    if (token) {
-      axios
-        .post(
-          "/api/cart/item",
-          { id, quantity: qty },
-          { headers: { Authorization: `Bearer ${token}` } }
-        )
-        .catch(() => {});
-    }
-  };
-
-  const clear = () => {
-    dispatch({ type: "CLEAR" });
-    if (token) {
-      axios
-        .delete("/api/cart", { headers: { Authorization: `Bearer ${token}` } })
-        .catch(() => {});
-    }
-  };
-
+  // Cart count
   const count = state.items.reduce((s, i) => s + (i.quantity || 0), 0);
 
   return (

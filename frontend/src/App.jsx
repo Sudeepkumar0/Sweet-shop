@@ -18,6 +18,7 @@ import Checkout from "./Checkout.jsx";
 import Favorites from "./Favorites.jsx";
 import About from "./About.jsx";
 import Search from "./Search.jsx";
+import Profile from "./Profile.jsx";
 
 function App() {
   const [adminToken, setAdminToken] = useState(
@@ -38,6 +39,7 @@ function App() {
             <Route path="/cart" element={<Cart />} />
             <Route path="/checkout" element={<Checkout />} />
             <Route path="/favorites" element={<Favorites />} />
+            <Route path="/profile" element={<Profile />} />
             <Route
               path="/admin-login"
               element={<AdminLogin setAdminToken={setAdminToken} />}

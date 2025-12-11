@@ -47,7 +47,11 @@ export default function Cart() {
                 >
                   <div className="col col-product">
                     <img
-                      src={it.image || "https://via.placeholder.com/100"}
+                      src={
+                        it.image
+                          ? `http://localhost:5000${it.image}`
+                          : "https://via.placeholder.com/100"
+                      }
                       alt={it.name}
                       className="prod-thumb"
                     />

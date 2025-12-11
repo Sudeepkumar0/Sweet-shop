@@ -1,0 +1,478 @@
+================================================================================
+        SWEETSHOP E-COMMERCE APPLICATION - COMPLETE WORKING ALGORITHM
+================================================================================
+
+================================================================================
+APPLICATION FLOW
+================================================================================
+
+1. SYSTEM INITIALIZATION
+────────────────────────────────────────────────────────────────────────────────
+→ Frontend starts on port 5173 (Vite dev server)
+→ Backend starts on port 5000 (Express server)
+→ MongoDB connection established
+→ Static files served from /uploads folder
+→ CORS enabled for cross-origin requests
+
+
+2. USER VISITS APPLICATION
+────────────────────────────────────────────────────────────────────────────────
+→ React app loads with AuthContext and CartContext providers
+→ Check localStorage for existing JWT token
+→ If token exists: Auto-login user, fetch cart from database
+→ If no token: User remains logged out, cart is empty
+→ Navigate to home page (SweetsList component)
+
+
+3. BROWSE PRODUCTS
+────────────────────────────────────────────────────────────────────────────────
+→ Frontend: GET /api/sweets
+→ Backend: Query all sweets from MongoDB, return array
+→ Frontend: Display sweets in grid layout with images
+→ Images displayed as: http://localhost:5000/uploads/filename
+→ Show: name, price, category, stock quantity, Add to Box button
+
+
+4. USER REGISTRATION
+────────────────────────────────────────────────────────────────────────────────
+→ User fills form: username, email, password
+→ POST /api/auth/register with credentials
+→ Backend: Validate fields, check if email/username exists
+→ Hash password with bcrypt (10 salt rounds)
+→ Save User document to MongoDB
+→ Return success message
+→ Redirect to login page
+
+
+5. USER LOGIN
+────────────────────────────────────────────────────────────────────────────────
+→ User enters email + password
+→ POST /api/auth/login
+→ Backend: Find user by email, compare password hash
+→ If valid: Generate JWT token (expires 7 days), return token + user data
+→ Frontend: Store token in localStorage, update AuthContext
+→ Trigger cart hydration (fetch user's cart from database)
+→ GET /api/cart with Authorization: Bearer token
+→ Backend: Find Cart by userId, return cart.items
+→ Frontend: Populate CartContext with items
+→ Redirect to home page
+
+
+6. ADD ITEM TO CART
+────────────────────────────────────────────────────────────────────────────────
+→ User clicks "Add to Box" button on a sweet
+→ Check if logged in (token exists)
+→ If not logged in: Show warning "Must be logged in"
+→ If logged in:
+  → Dispatch ADD_ITEM to local state (optimistic update)
+  → POST /api/cart/item with { id: sweetId, quantity: 1 }
+  → Backend authenticateJWT middleware verifies token
+  → Extract userId from token, find or create Cart document
+  → Validate sweet exists, check stock availability
+  → Find item in cart.items by sweetId:
+    • If exists: Update quantity (add quantities)
+    • If new: Push new item to cart.items array
+  → Save cart to MongoDB
+  → Return updated cart.items array
+  → Frontend: Hydrate cart from server response (dispatch HYDRATE)
+  → Navbar badge updates with new count
+  → Button shows "Added!" animation
+
+
+7. VIEW CART
+────────────────────────────────────────────────────────────────────────────────
+→ User navigates to /cart
+→ CartContext provides items array
+→ Display each item with:
+  • Product image (http://localhost:5000 + image path)
+  • Name, price, quantity selector
+  • Remove button (trash icon)
+  • Total = price × quantity
+→ Calculate cart total = sum of all item totals
+→ Show "Clear Cart" button
+
+
+8. UPDATE ITEM QUANTITY
+────────────────────────────────────────────────────────────────────────────────
+→ User changes quantity in cart
+→ Check if logged in
+→ Dispatch UPDATE_QTY to local state (optimistic)
+→ POST /api/cart/item with { id: sweetId, quantity: newQty }
+→ Backend: Authenticate, find cart, find item in cart.items
+→ Update item.quantity (cap at available stock)
+→ Save cart
+→ Return updated cart.items
+→ Frontend: Hydrate from response
+→ Total price recalculates automatically
+
+
+9. REMOVE ITEM FROM CART
+────────────────────────────────────────────────────────────────────────────────
+→ User clicks remove button
+→ Check if logged in
+→ Add item._id to removingIds array (for animation)
+→ Wait 240ms for animation
+→ Dispatch REMOVE_ITEM (optimistic)
+→ DELETE /api/cart/item/:itemId (itemId = subdocument _id)
+→ Backend: Authenticate, find cart
+→ Filter cart.items where item._id !== itemId
+→ Save cart
+→ Return updated cart.items
+→ Frontend: Hydrate from response
+→ Item disappears from UI
+→ Cart count decrements
+
+
+10. CLEAR CART
+────────────────────────────────────────────────────────────────────────────────
+→ User clicks "Clear Cart" button
+→ Check if logged in
+→ Dispatch CLEAR action (optimistic)
+→ DELETE /api/cart
+→ Backend: Authenticate, find cart, set cart.items = []
+→ Save cart
+→ Return success message
+→ Frontend: Cart is empty
+→ Show "Your box is empty" message
+
+
+11. ADMIN LOGIN
+────────────────────────────────────────────────────────────────────────────────
+→ Admin navigates to /admin/login
+→ Enter admin credentials (email + password)
+→ POST /api/auth/login
+→ Backend: Authenticate, check if user.role === "admin"
+→ Return JWT token with admin role
+→ Frontend: Store token, redirect to /admin/panel
+
+
+12. ADMIN MANAGE PRODUCTS
+────────────────────────────────────────────────────────────────────────────────
+
+ADD SWEET:
+→ Admin fills form: name, price, description, category, quantity, image
+→ POST /api/inventory with multipart form data
+→ Multer saves image to /uploads folder
+→ Create Sweet document with image path
+→ Return created sweet
+→ Frontend: Refresh sweets list
+
+UPDATE SWEET:
+→ Admin edits sweet details
+→ PUT /api/inventory/:id with updated fields
+→ If new image: Replace old image file
+→ Update Sweet document
+→ Return updated sweet
+→ Frontend: Refresh sweets list
+
+DELETE SWEET:
+→ Admin clicks delete button
+→ DELETE /api/inventory/:id
+→ Backend: Find sweet, delete image file, delete document
+→ Return success
+→ Frontend: Remove from list
+
+
+13. USER LOGOUT
+────────────────────────────────────────────────────────────────────────────────
+→ User clicks logout
+→ Clear token from localStorage
+→ Clear AuthContext (user = null, token = null)
+→ Clear CartContext (items = [])
+→ Redirect to home page
+→ Cart hydration effect runs: token is null → cart stays empty
+
+
+14. CART PERSISTENCE
+────────────────────────────────────────────────────────────────────────────────
+→ User's cart is stored in MongoDB Cart collection
+→ Each cart document has unique userId
+→ When user logs in: Cart automatically loaded from database
+→ When user adds/removes items: Synced to database immediately
+→ When user logs out and logs back in: Cart items still there
+→ Different users have completely separate carts
+
+
+15. AUTHENTICATION FLOW
+────────────────────────────────────────────────────────────────────────────────
+Every protected API request:
+→ Frontend includes Authorization: Bearer <token> header
+→ Backend authenticateJWT middleware extracts token
+→ Verify token signature and expiry
+→ If valid: Decode payload, attach user data to req.user
+→ If invalid/expired: Return 401/403 error
+→ Frontend: Redirect to login page on auth error
+
+
+16. STATE MANAGEMENT
+────────────────────────────────────────────────────────────────────────────────
+
+AUTH CONTEXT:
+→ Stores: user object, token, isLoggedIn status
+→ Provides: login(), logout() functions
+→ Persists token in localStorage
+→ Shared across entire app via Context Provider
+
+CART CONTEXT:
+→ Stores: items array, cart count
+→ Provides: addItem(), removeItem(), updateQty(), clear()
+→ Uses useReducer for state updates
+→ Optimistic updates + server hydration pattern
+→ Auto-syncs with database on every change
+
+
+17. ERROR HANDLING
+────────────────────────────────────────────────────────────────────────────────
+→ Network errors: Logged to console, user sees error message
+→ Auth errors (401/403): Redirect to login
+→ Validation errors (400): Show error message to user
+→ Stock errors: Prevent add to cart, show "Out of stock"
+→ Server errors (500): Log error, show generic error message
+
+
+18. DATA CONSISTENCY
+────────────────────────────────────────────────────────────────────────────────
+→ Cart: Server is source of truth
+→ After every mutation (add/remove/update): Frontend hydrates from server response
+→ Optimistic updates provide immediate feedback
+→ Server response overwrites optimistic state
+→ Ensures cart always matches database state
+
+
+================================================================================
+COMPLETE REQUEST-RESPONSE CYCLE EXAMPLE
+================================================================================
+
+SCENARIO: User adds item to cart
+
+1. User clicks "Add to Box" on Sweet #123
+
+2. Frontend checks: token exists ✓
+
+3. Frontend dispatches: ADD_ITEM (optimistic - UI updates immediately)
+
+4. Frontend sends: POST /api/cart/item { id: "123", quantity: 1 }
+   Headers: Authorization: Bearer eyJhbGc...
+
+5. Backend receives request
+
+6. authenticateJWT middleware: Verifies token, extracts userId="user456"
+
+7. cart.controller.addOrUpdateItem executes
+
+8. Find Cart where userId="user456" (or create if doesn't exist)
+
+9. Find Sweet #123 in database, validate stock > 0
+
+10. Check if Sweet #123 already in cart.items:
+    - If yes: cart.items[i].quantity += 1
+    - If no: cart.items.push({ 
+        sweetId: "123", 
+        name: "...", 
+        price: 100, 
+        image: "...", 
+        quantity: 1 
+      })
+
+11. Save cart to MongoDB
+
+12. Response: [{ 
+      _id: "cart_item_789", 
+      sweetId: "123", 
+      name: "Chocolate", 
+      price: 100, 
+      quantity: 1 
+    }, ...]
+
+13. Frontend receives response
+
+14. CartContext.hydrate() dispatches HYDRATE action
+
+15. Cart state replaced with server data (items = response)
+
+16. React re-renders Cart component, Navbar badge
+
+17. User sees updated cart count, item appears in cart
+
+
+================================================================================
+DATABASE SCHEMA
+================================================================================
+
+1. USER COLLECTION (users)
+────────────────────────────────────────────────────────────────────────────────
+{
+  _id: ObjectId,
+  username: String (unique),
+  email: String (unique),
+  password: String (hashed with bcrypt),
+  role: String (default: "user"),
+  createdAt: Timestamp,
+  updatedAt: Timestamp
+}
+
+
+2. SWEET COLLECTION (sweets)
+────────────────────────────────────────────────────────────────────────────────
+{
+  _id: ObjectId,
+  name: String,
+  price: Number,
+  description: String,
+  category: String,
+  quantity: Number (stock),
+  image: String (file path),
+  createdAt: Timestamp,
+  updatedAt: Timestamp
+}
+
+
+3. CART COLLECTION (carts)
+────────────────────────────────────────────────────────────────────────────────
+{
+  _id: ObjectId,
+  userId: ObjectId (ref: User, unique),
+  items: [
+    {
+      _id: ObjectId (auto-generated subdocument ID),
+      sweetId: ObjectId (ref: Sweet),
+      name: String,
+      price: Number,
+      image: String,
+      quantity: Number
+    }
+  ],
+  createdAt: Timestamp,
+  updatedAt: Timestamp
+}
+
+
+================================================================================
+API ENDPOINTS
+================================================================================
+
+AUTHENTICATION
+────────────────────────────────────────────────────────────────────────────────
+POST   /api/auth/register          Register new user
+POST   /api/auth/login              User login (returns JWT token)
+
+
+PRODUCTS (PUBLIC)
+────────────────────────────────────────────────────────────────────────────────
+GET    /api/sweets                  Get all sweets
+
+
+CART (AUTHENTICATED)
+────────────────────────────────────────────────────────────────────────────────
+GET    /api/cart                    Get user's cart
+POST   /api/cart/item               Add/update item in cart
+DELETE /api/cart/item/:id           Remove item from cart
+DELETE /api/cart                    Clear cart
+POST   /api/cart/merge              Merge items with cart
+POST   /api/cart/set                Replace entire cart
+
+
+ADMIN INVENTORY (ADMIN ONLY)
+────────────────────────────────────────────────────────────────────────────────
+GET    /api/inventory               Get all sweets (admin view)
+POST   /api/inventory               Add new sweet
+PUT    /api/inventory/:id           Update sweet
+DELETE /api/inventory/:id           Delete sweet
+
+
+================================================================================
+TECHNOLOGY STACK
+================================================================================
+
+FRONTEND:
+→ React 18
+→ Vite (Build tool & dev server)
+→ React Router (Navigation)
+→ Context API (State management)
+→ Axios (HTTP client)
+→ CSS (Styling)
+
+BACKEND:
+→ Node.js
+→ Express.js (Web framework)
+→ Mongoose (MongoDB ODM)
+→ JWT (Authentication)
+→ bcrypt (Password hashing)
+→ Multer (File uploads)
+
+DATABASE:
+→ MongoDB (NoSQL database)
+
+PORTS:
+→ Frontend: 5173 (Vite dev server)
+→ Backend: 5000 (Express server)
+
+
+================================================================================
+KEY DESIGN DECISIONS
+================================================================================
+
+1. SEPARATE CART COLLECTION
+   → Not embedded in User model for better scalability
+   → Each cart has unique userId for user isolation
+
+2. OPTIMISTIC UPDATES
+   → Immediate UI feedback for better UX
+   → Server response hydrates to ensure consistency
+
+3. SERVER AS SOURCE OF TRUTH
+   → Always hydrate cart from server response
+   → Prevents client-side state drift
+
+4. JWT IN HEADERS
+   → Authorization: Bearer token pattern
+   → Token stored in localStorage
+   → 7-day expiration
+
+5. NO GUEST CART
+   → Users must login to use cart
+   → Simplifies architecture and security
+
+6. STOCK VALIDATION
+   → Backend always checks availability
+   → Prevents overselling
+
+7. SUBDOCUMENT IDs
+   → Cart items use MongoDB auto-generated _id
+   → Reliable removal by unique identifier
+
+8. BCRYPT PASSWORD HASHING
+   → 10 salt rounds for security
+   → Never store plain text passwords
+
+9. ROLE-BASED ACCESS
+   → Admin role required for inventory management
+   → Middleware checks user.role === "admin"
+
+10. IMAGE HANDLING
+    → Multer saves to /uploads folder
+    → Static file serving for images
+    → Full URL construction in frontend
+
+
+================================================================================
+SECURITY MEASURES
+================================================================================
+
+1. Password Security: Bcrypt hashing (10 rounds)
+2. JWT Authentication: Token-based auth, 7-day expiry
+3. Route Protection: Middleware checks for valid token
+4. Admin Verification: Role-based access control
+5. Cart Isolation: userId ensures user-specific data
+6. Input Validation: Backend validates all inputs
+7. CORS: Configured for cross-origin requests
+8. Error Sanitization: No sensitive data in error messages
+
+
+================================================================================
+END OF ALGORITHM DOCUMENTATION
+================================================================================
+Generated: December 10, 2025
+Project: SweetShop E-Commerce Application
+Technology: MERN Stack (MongoDB, Express, React, Node.js)
+================================================================================

@@ -51,12 +51,34 @@ body {
 
 .adminFormFile {
   grid-column: 1 / 4;
+  margin-bottom: 16px;
+}
+
+.adminFormFileInput {
+  display: block;
+  width: 100%;
   padding: 32px;
   border: 2px dashed #f8bbd0;
-  border-radius: 12px;
+  border-radius: 8px;
   background: #fff0f6;
-  text-align: center;
-  margin-bottom: 16px;
+  font-size: 1rem;
+  font-family: "Roboto Mono", sans-serif;
+  color: #666;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+}
+
+.adminFormFileInput:hover {
+  border-color: #f582b2;
+  background: #fff5fa;
+}
+
+.adminFormFileInput:focus {
+  outline: none;
+  border-color: #f55095ff;
+  background: #fff5fa;
+  box-shadow: 0 0 0 3px rgba(245, 80, 149, 0.1);
 }
 
 .adminFormButton {

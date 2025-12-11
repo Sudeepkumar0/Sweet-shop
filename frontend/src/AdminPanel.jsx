@@ -13,6 +13,7 @@ const AdminPanel = ({ adminToken }) => {
     price: "",
     quantity: "",
     category: "",
+    description: "",
     image: null,
   });
   const [error, setError] = useState("");
@@ -50,17 +51,55 @@ const AdminPanel = ({ adminToken }) => {
   const handleAddSweet = async (e) => {
     e.preventDefault();
     setError("");
+
+    // Validate required fields
+    if (!form.name || !form.price || !form.quantity || !form.category) {
+      setError("All fields are required");
+      return;
+    }
+
     try {
       const data = new FormData();
-      Object.entries(form).forEach(([key, val]) => data.append(key, val));
-      await axios.post("/api/sweets", data, {
-        headers: { Authorization: `Bearer ${adminToken}` },
+      data.append("name", form.name);
+      data.append("price", parseFloat(form.price));
+      data.append("quantity", parseInt(form.quantity));
+      data.append("category", form.category);
+      data.append("description", form.description);
+      if (form.image) {
+        data.append("image", form.image);
+      }
+
+      const response = await axios.post("/api/sweets", data, {
+        headers: {
+          Authorization: `Bearer ${adminToken}`,
+        },
       });
-      setForm({ name: "", price: "", quantity: "", category: "", image: null });
+
+      console.log("Sweet added successfully:", response.data);
+
+      // Clear form
+      setForm({
+        name: "",
+        price: "",
+        quantity: "",
+        category: "",
+        description: "",
+        image: null,
+      });
+
+      // Reset file input
+      const fileInput = document.getElementById("sweet-image-upload");
+      if (fileInput) fileInput.value = "";
+
+      // Refresh sweets list
       const res = await axios.get("/api/sweets");
       setSweets(res.data);
+      setError(""); // Clear error on success
     } catch (err) {
-      setError(err.response?.data?.message || "Failed to add sweet");
+      console.error("Upload error:", err);
+      const errorMsg =
+        err.response?.data?.message || err.message || "Failed to add sweet";
+      setError(errorMsg);
     }
   };
 
@@ -151,36 +190,27 @@ const AdminPanel = ({ adminToken }) => {
             placeholder="Category (e.g., Candy, Chocolate)"
             required
           />
+          <textarea
+            className="adminFormInput"
+            name="description"
+            value={form.description}
+            onChange={handleChange}
+            placeholder="Description (optional)"
+            style={{
+              gridColumn: "1 / -1",
+              minHeight: "80px",
+              resize: "vertical",
+            }}
+          />
           <div className="adminFormFile">
             <input
               type="file"
               name="image"
               onChange={handleChange}
-              style={{ display: "none" }}
               id="sweet-image-upload"
+              accept="image/*"
+              className="adminFormFileInput"
             />
-            <label htmlFor="sweet-image-upload" style={{ cursor: "pointer" }}>
-              Click or drag an image here to upload
-              <br />
-              <span style={{ fontSize: "0.9rem", color: "#888" }}>
-                PNG, JPG, GIF up to 10MB
-              </span>
-              <br />
-              <span style={{ display: "inline-block", marginTop: 12 }}>
-                <button
-                  type="button"
-                  className="adminFormButton"
-                  style={{
-                    background: "#fff0f6",
-                    color: "#f582b2",
-                    boxShadow: "none",
-                    fontWeight: 600,
-                  }}
-                >
-                  Browse Files
-                </button>
-              </span>
-            </label>
           </div>
           <button type="submit" className="adminFormButton">
             Add Sweet

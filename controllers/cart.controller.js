@@ -1,12 +1,14 @@
-const User = require("../models/User");
+const Cart = require("../models/Cart");
 const Sweet = require("../models/Sweet");
 
 // Get current user's cart
 exports.getCart = async (req, res) => {
   try {
-    const user = await User.findById(req.user.id).select("cart");
-    if (!user) return res.status(404).json({ message: "User not found" });
-    res.json(user.cart || []);
+    let cart = await Cart.findOne({ userId: req.user.id });
+    if (!cart) {
+      cart = await Cart.create({ userId: req.user.id, items: [] });
+    }
+    res.json(cart.items || []);
   } catch (err) {
     res.status(500).json({ message: "Server error", error: err.message });
   }
@@ -16,8 +18,10 @@ exports.getCart = async (req, res) => {
 exports.setCart = async (req, res) => {
   try {
     const items = Array.isArray(req.body.items) ? req.body.items : [];
-    const user = await User.findById(req.user.id);
-    if (!user) return res.status(404).json({ message: "User not found" });
+    let cart = await Cart.findOne({ userId: req.user.id });
+    if (!cart) {
+      cart = await Cart.create({ userId: req.user.id, items: [] });
+    }
     // validate items - ensure sweet exists and respect available quantity
     const validated = [];
     for (const it of items) {
@@ -38,9 +42,9 @@ exports.setCart = async (req, res) => {
         quantity: qty,
       });
     }
-    user.cart = validated;
-    await user.save();
-    res.json(user.cart);
+    cart.items = validated;
+    await cart.save();
+    res.json(cart.items);
   } catch (err) {
     res.status(500).json({ message: "Server error", error: err.message });
   }
@@ -50,12 +54,14 @@ exports.setCart = async (req, res) => {
 exports.mergeCart = async (req, res) => {
   try {
     const incoming = Array.isArray(req.body.items) ? req.body.items : [];
-    const user = await User.findById(req.user.id);
-    if (!user) return res.status(404).json({ message: "User not found" });
+    let cart = await Cart.findOne({ userId: req.user.id });
+    if (!cart) {
+      cart = await Cart.create({ userId: req.user.id, items: [] });
+    }
 
     const map = new Map();
     // preload existing
-    (user.cart || []).forEach((it) => {
+    (cart.items || []).forEach((it) => {
       map.set(it.sweetId?.toString(), {
         ...(it.toObject ? it.toObject() : it),
       });
@@ -99,10 +105,10 @@ exports.mergeCart = async (req, res) => {
       });
     }
 
-    user.cart = merged;
+    cart.items = merged;
 
-    await user.save();
-    res.json(user.cart);
+    await cart.save();
+    res.json(cart.items);
   } catch (err) {
     res.status(500).json({ message: "Server error", error: err.message });
   }
@@ -113,10 +119,15 @@ exports.addOrUpdateItem = async (req, res) => {
   try {
     const { id, quantity } = req.body;
     if (!id) return res.status(400).json({ message: "Missing item id" });
-    const user = await User.findById(req.user.id);
-    if (!user) return res.status(404).json({ message: "User not found" });
+
+    let cart = await Cart.findOne({ userId: req.user.id });
+    if (!cart) {
+      cart = await Cart.create({ userId: req.user.id, items: [] });
+    }
+
     const sweet = await Sweet.findById(id).lean();
     if (!sweet) return res.status(400).json({ message: "Sweet not found" });
+
     const qty = Math.max(
       1,
       Math.min(Number(quantity || 1), sweet.quantity || 0)
@@ -124,11 +135,14 @@ exports.addOrUpdateItem = async (req, res) => {
     if (qty <= 0)
       return res.status(400).json({ message: "Insufficient stock" });
 
-    const idx = user.cart.findIndex((it) => it.sweetId == id);
+    const idx = cart.items.findIndex((it) => it.sweetId.toString() === id);
     if (idx >= 0) {
-      user.cart[idx].quantity = qty;
+      cart.items[idx].quantity = qty;
+      cart.items[idx].price = sweet.price;
+      cart.items[idx].name = sweet.name;
+      cart.items[idx].image = sweet.image;
     } else {
-      user.cart.push({
+      cart.items.push({
         sweetId: id,
         name: sweet.name,
         price: sweet.price,
@@ -136,8 +150,8 @@ exports.addOrUpdateItem = async (req, res) => {
         quantity: qty,
       });
     }
-    await user.save();
-    res.json(user.cart);
+    await cart.save();
+    res.json(cart.items);
   } catch (err) {
     res.status(500).json({ message: "Server error", error: err.message });
   }
@@ -147,11 +161,13 @@ exports.addOrUpdateItem = async (req, res) => {
 exports.removeItem = async (req, res) => {
   try {
     const id = req.params.id;
-    const user = await User.findById(req.user.id);
-    if (!user) return res.status(404).json({ message: "User not found" });
-    user.cart = (user.cart || []).filter((it) => it.sweetId != id);
-    await user.save();
-    res.json(user.cart);
+    let cart = await Cart.findOne({ userId: req.user.id });
+    if (!cart) {
+      cart = await Cart.create({ userId: req.user.id, items: [] });
+    }
+    cart.items = cart.items.filter((it) => it._id.toString() !== id);
+    await cart.save();
+    res.json(cart.items);
   } catch (err) {
     res.status(500).json({ message: "Server error", error: err.message });
   }
@@ -160,10 +176,12 @@ exports.removeItem = async (req, res) => {
 // Clear cart
 exports.clearCart = async (req, res) => {
   try {
-    const user = await User.findById(req.user.id);
-    if (!user) return res.status(404).json({ message: "User not found" });
-    user.cart = [];
-    await user.save();
+    let cart = await Cart.findOne({ userId: req.user.id });
+    if (!cart) {
+      cart = await Cart.create({ userId: req.user.id, items: [] });
+    }
+    cart.items = [];
+    await cart.save();
     res.json({ message: "Cart cleared" });
   } catch (err) {
     res.status(500).json({ message: "Server error", error: err.message });
