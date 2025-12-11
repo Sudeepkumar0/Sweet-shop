@@ -4,6 +4,7 @@ import {
   Routes,
   Route,
   Navigate,
+  useLocation,
 } from "react-router-dom";
 import { AuthProvider } from "./AuthContext";
 import { CartProvider } from "./CartContext";
@@ -19,6 +20,20 @@ import Favorites from "./Favorites.jsx";
 import About from "./About.jsx";
 import Search from "./Search.jsx";
 import Profile from "./Profile.jsx";
+import Footer from "./Footer.jsx";
+
+function Layout({ children, adminToken }) {
+  const location = useLocation();
+  const isAdminRoute = location.pathname.startsWith("/admin");
+
+  return (
+    <>
+      {!isAdminRoute && <NavBar />}
+      {children}
+      {!isAdminRoute && <Footer />}
+    </>
+  );
+}
 
 function App() {
   const [adminToken, setAdminToken] = useState(
@@ -28,27 +43,28 @@ function App() {
     <AuthProvider>
       <CartProvider>
         <Router>
-          <NavBar />
-          <Routes>
-            <Route path="/" element={<Navigate to="/sweets" replace />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/sweets" element={<SweetsList />} />
-            <Route path="/search" element={<Search />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/cart" element={<Cart />} />
-            <Route path="/checkout" element={<Checkout />} />
-            <Route path="/favorites" element={<Favorites />} />
-            <Route path="/profile" element={<Profile />} />
-            <Route
-              path="/admin-login"
-              element={<AdminLogin setAdminToken={setAdminToken} />}
-            />
-            <Route
-              path="/admin"
-              element={<AdminPanel adminToken={adminToken} />}
-            />
-          </Routes>
+          <Layout adminToken={adminToken}>
+            <Routes>
+              <Route path="/" element={<Navigate to="/sweets" replace />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
+              <Route path="/sweets" element={<SweetsList />} />
+              <Route path="/search" element={<Search />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/cart" element={<Cart />} />
+              <Route path="/checkout" element={<Checkout />} />
+              <Route path="/favorites" element={<Favorites />} />
+              <Route path="/profile" element={<Profile />} />
+              <Route
+                path="/admin-login"
+                element={<AdminLogin setAdminToken={setAdminToken} />}
+              />
+              <Route
+                path="/admin"
+                element={<AdminPanel adminToken={adminToken} />}
+              />
+            </Routes>
+          </Layout>
         </Router>
       </CartProvider>
     </AuthProvider>
