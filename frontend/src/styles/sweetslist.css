@@ -349,6 +349,43 @@ body {
   border-color: rgba(245, 80, 149, 0.3);
 }
 
+/* Out of Stock Styling */
+.sweet-card.out-of-stock {
+  background: linear-gradient(135deg, #e8e8e8 0%, #f5f5f5 100%);
+  opacity: 0.75;
+}
+
+.sweet-card.out-of-stock:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transform: translateY(-4px);
+  border-color: rgba(0, 0, 0, 0.2);
+}
+
+.sweet-card.out-of-stock .sweet-image {
+  filter: grayscale(100%);
+  opacity: 0.6;
+}
+
+.sweet-card.out-of-stock .sweet-content {
+  opacity: 0.8;
+}
+
+.out-of-stock-badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: rgba(211, 47, 47, 0.95);
+  color: white;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  z-index: 10;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
 /* Image Container */
 .sweet-image-container {
   position: relative;

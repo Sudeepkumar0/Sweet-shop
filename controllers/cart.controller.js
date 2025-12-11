@@ -125,17 +125,46 @@ exports.addOrUpdateItem = async (req, res) => {
       cart = await Cart.create({ userId: req.user.id, items: [] });
     }
 
-    const sweet = await Sweet.findById(id).lean();
+    const sweet = await Sweet.findById(id);
     if (!sweet) return res.status(400).json({ message: "Sweet not found" });
+
+    // Check if item is out of stock
+    if (sweet.quantity === 0) {
+      return res.status(400).json({ message: "Item is out of stock" });
+    }
+
+    const requestedQty = Number(quantity || 1);
+    const idx = cart.items.findIndex((it) => it.sweetId.toString() === id);
+    const currentCartQty = idx >= 0 ? cart.items[idx].quantity : 0;
+    const qtyDifference = requestedQty - currentCartQty;
+
+    // If requested quantity exceeds available stock, return error
+    if (qtyDifference > sweet.quantity) {
+      return res.status(400).json({
+        message: `Only ${sweet.quantity} items available in stock`,
+        availableStock: sweet.quantity,
+      });
+    }
 
     const qty = Math.max(
       1,
-      Math.min(Number(quantity || 1), sweet.quantity || 0)
+      Math.min(requestedQty, sweet.quantity + currentCartQty)
     );
-    if (qty <= 0)
-      return res.status(400).json({ message: "Insufficient stock" });
 
-    const idx = cart.items.findIndex((it) => it.sweetId.toString() === id);
+    if (qty <= 0) {
+      return res.status(400).json({ message: "Insufficient stock" });
+    }
+
+    // Update stock: decrease by the difference
+    if (qtyDifference > 0) {
+      sweet.quantity -= qtyDifference;
+      await sweet.save();
+    } else if (qtyDifference < 0) {
+      // Quantity decreased, restore stock
+      sweet.quantity += Math.abs(qtyDifference);
+      await sweet.save();
+    }
+
     if (idx >= 0) {
       cart.items[idx].quantity = qty;
       cart.items[idx].price = sweet.price;
@@ -165,6 +194,18 @@ exports.removeItem = async (req, res) => {
     if (!cart) {
       cart = await Cart.create({ userId: req.user.id, items: [] });
     }
+
+    // Find the item being removed to restore its stock
+    const itemToRemove = cart.items.find((it) => it._id.toString() === id);
+    if (itemToRemove) {
+      // Restore stock back to the sweet
+      const sweet = await Sweet.findById(itemToRemove.sweetId);
+      if (sweet) {
+        sweet.quantity += itemToRemove.quantity;
+        await sweet.save();
+      }
+    }
+
     cart.items = cart.items.filter((it) => it._id.toString() !== id);
     await cart.save();
     res.json(cart.items);
@@ -180,6 +221,16 @@ exports.clearCart = async (req, res) => {
     if (!cart) {
       cart = await Cart.create({ userId: req.user.id, items: [] });
     }
+
+    // Restore stock for all items in cart before clearing
+    for (const item of cart.items) {
+      const sweet = await Sweet.findById(item.sweetId);
+      if (sweet) {
+        sweet.quantity += item.quantity;
+        await sweet.save();
+      }
+    }
+
     cart.items = [];
     await cart.save();
     res.json({ message: "Cart cleared" });

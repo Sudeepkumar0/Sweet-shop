@@ -99,6 +99,54 @@ body {
   background: #ff8fcf;
 }
 
+/* Stock Cell Styling */
+.stock-cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.stock-number {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.stock-badge {
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+}
+
+.stock-badge.out-of-stock {
+  background: #ffebee;
+  color: #c62828;
+  border: 1px solid #ef5350;
+}
+
+.stock-badge.low-stock {
+  background: #fff3e0;
+  color: #e65100;
+  border: 1px solid #ff9800;
+}
+
+.stock-badge.warning-stock {
+  background: #fff9c4;
+  color: #f57f17;
+  border: 1px solid #fbc02d;
+}
+
+.stock-badge.in-stock {
+  background: #e8f5e9;
+  color: #2e7d32;
+  border: 1px solid #66bb6a;
+}
+
 .sweetsListSection {
   background: #fff;
   border-radius: 16px;

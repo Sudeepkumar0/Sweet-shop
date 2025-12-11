@@ -139,13 +139,21 @@ function AddToBoxButton({ sweet }) {
     : "https://via.placeholder.com/100";
 
   const handleAdd = () => {
-    if (sweet.quantity === 0) return;
+    if (sweet.quantity === 0) {
+      alert("This item is out of stock");
+      return;
+    }
+    if (quantity > sweet.quantity) {
+      alert(`Only ${sweet.quantity} items available in stock`);
+      return;
+    }
     const ok = addItem({
       _id: sweet._id,
       name: sweet.name,
       price: sweet.price,
       image,
       quantity: quantity,
+      availableStock: sweet.quantity,
     });
     if (!ok) {
       const go = window.confirm("Please login to add items. Go to login?");
@@ -163,7 +171,7 @@ function AddToBoxButton({ sweet }) {
         <button
           onClick={() => setQuantity(Math.max(1, quantity - 1))}
           className="qty-btn"
-          disabled={quantity === 1}
+          disabled={quantity === 1 || sweet.quantity === 0}
         >
           −
         </button>
@@ -171,7 +179,10 @@ function AddToBoxButton({ sweet }) {
         <button
           onClick={() => setQuantity(Math.min(sweet.quantity, quantity + 1))}
           className="qty-btn"
-          disabled={quantity >= sweet.quantity}
+          disabled={quantity >= sweet.quantity || sweet.quantity === 0}
+          title={
+            quantity >= sweet.quantity ? `Only ${sweet.quantity} available` : ""
+          }
         >
           +
         </button>
@@ -185,7 +196,11 @@ function AddToBoxButton({ sweet }) {
           cursor: sweet.quantity === 0 ? "not-allowed" : "pointer",
         }}
       >
-        {added ? "✓ Added!" : "Add to Box"}
+        {sweet.quantity === 0
+          ? "Out of Stock"
+          : added
+          ? "✓ Added!"
+          : "Add to Box"}
       </button>
     </div>
   );
@@ -447,7 +462,12 @@ function SweetsList() {
         <>
           <div className="main-grid">
             {paginatedSweets.map((sweet) => (
-              <div className="sweet-card" key={sweet._id}>
+              <div
+                className={`sweet-card ${
+                  sweet.quantity === 0 ? "out-of-stock" : ""
+                }`}
+                key={sweet._id}
+              >
                 <div className="sweet-image-container">
                   <img
                     src={
@@ -459,6 +479,9 @@ function SweetsList() {
                     className="sweet-image"
                     loading="lazy"
                   />
+                  {sweet.quantity === 0 && (
+                    <div className="out-of-stock-badge">Out of Stock</div>
+                  )}
                   <div className="card-overlay">
                     <button
                       className="quick-view-btn"

@@ -54,50 +54,74 @@ export default function Favorites() {
 
   if (loading)
     return (
-      <main style={{ padding: "1rem" }}>
-        <h2>Favorites</h2>
-        <p>Loading…</p>
+      <main className="favorites-page">
+        <div className="favorites-container">
+          <div className="favorites-header">
+            <h1 className="favorites-title">My Favorites</h1>
+            <p className="favorites-subtitle">
+              Loading your favorite sweets...
+            </p>
+          </div>
+        </div>
       </main>
     );
 
   return (
-    <main style={{ padding: "1rem" }}>
-      <h2>Favorites</h2>
-      {items.length === 0 ? (
-        <p>
-          Your favorite sweets will appear here.{" "}
-          <Link to="/sweets">Browse sweets</Link>
-        </p>
-      ) : (
-        <div className="favorites-grid">
-          {items.map((s) => (
-            <div key={s._id} className="fav-card">
-              <div className="fav-thumb">
-                <img
-                  src={
-                    s.image
-                      ? `http://localhost:5000${s.image}`
-                      : s.imageUrl || "https://via.placeholder.com/320x200"
-                  }
-                  alt={s.name}
-                />
-              </div>
-              <div className="fav-body">
-                <h4 className="fav-title">{s.name}</h4>
-                <div className="fav-price">₹{s.price}</div>
-                <div className="fav-actions">
-                  <Link to={`/sweets/${s._id}`} className="fav-view">
-                    View
-                  </Link>
-                  <button onClick={() => remove(s._id)} className="fav-remove">
-                    Remove
-                  </button>
+    <main className="favorites-page">
+      <div className="favorites-container">
+        <div className="favorites-header">
+          <h1 className="favorites-title">My Favorites</h1>
+          <p className="favorites-subtitle">
+            {items.length === 0
+              ? "Your favorite sweets collection"
+              : `${items.length} sweet${
+                  items.length > 1 ? "s" : ""
+                } in your favorites`}
+          </p>
+        </div>
+        {items.length === 0 ? (
+          <div className="empty-favorites">
+            <div className="empty-icon">💝</div>
+            <h3>No favorites yet</h3>
+            <p>Start adding sweets you love to your favorites collection.</p>
+            <Link to="/sweets" className="browse-btn">
+              Browse Sweets
+            </Link>
+          </div>
+        ) : (
+          <div className="favorites-grid">
+            {items.map((s) => (
+              <div key={s._id} className="fav-card">
+                <div className="fav-thumb">
+                  <img
+                    src={
+                      s.image
+                        ? `http://localhost:5000${s.image}`
+                        : s.imageUrl || "https://via.placeholder.com/320x200"
+                    }
+                    alt={s.name}
+                  />
+                </div>
+                <div className="fav-body">
+                  <h4 className="fav-title">{s.name}</h4>
+                  <div className="fav-price">₹{s.price}</div>
+                  <div className="fav-actions">
+                    <Link to={`/sweets/${s._id}`} className="fav-view">
+                      View
+                    </Link>
+                    <button
+                      onClick={() => remove(s._id)}
+                      className="fav-remove"
+                    >
+                      Remove
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
-        </div>
-      )}
+            ))}
+          </div>
+        )}
+      </div>
     </main>
   );
 }

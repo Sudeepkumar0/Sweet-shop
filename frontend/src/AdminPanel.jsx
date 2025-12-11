@@ -374,7 +374,28 @@ const AdminPanel = ({ adminToken }) => {
                     <>
                       <td>{sweet.name}</td>
                       <td>${parseFloat(sweet.price).toFixed(2)}</td>
-                      <td>{sweet.quantity}</td>
+                      <td>
+                        <div className="stock-cell">
+                          <span className="stock-number">{sweet.quantity}</span>
+                          {sweet.quantity === 0 ? (
+                            <span className="stock-badge out-of-stock">
+                              Out of Stock
+                            </span>
+                          ) : sweet.quantity <= 5 ? (
+                            <span className="stock-badge low-stock">
+                              Low Stock
+                            </span>
+                          ) : sweet.quantity <= 10 ? (
+                            <span className="stock-badge warning-stock">
+                              Warning
+                            </span>
+                          ) : (
+                            <span className="stock-badge in-stock">
+                              In Stock
+                            </span>
+                          )}
+                        </div>
+                      </td>
                       <td>
                         <button
                           className="actionBtn"

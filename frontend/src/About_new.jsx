@@ -74,7 +74,7 @@ export default function About() {
               <div className="stat-label">Happy Customers</div>
             </div>
             <div className="stat-card">
-              <div className="stat-icon">🎂</div>
+              <div className="stat-icon">🍰</div>
               <div className="stat-number">50+</div>
               <div className="stat-label">Sweet Varieties</div>
             </div>
@@ -286,75 +286,189 @@ export default function About() {
         </div>
       </section>
 
-      <section className="testimonials container">
-        <h3>What Customers Say</h3>
-        <div className="test-grid">
-          <blockquote>
-            “Exceptional pastries — the honey truffles are my favourite. Fast
-            delivery and perfect packaging.”
-            <cite>— A. Customer</cite>
-          </blockquote>
-          <blockquote>
-            “Perfect for events. The team helped create a custom box for our
-            wedding — guests loved it.”
-            <cite>— J. Event Planner</cite>
-          </blockquote>
+      {/* Testimonials Section */}
+      <section className="testimonials-section">
+        <div className="container">
+          <div className="section-header">
+            <span className="section-badge">Testimonials</span>
+            <h2>What Our Customers Say</h2>
+            <p>Don't just take our word for it</p>
+          </div>
+          <div className="testimonials-grid">
+            <div className="testimonial-card">
+              <div className="testimonial-stars">⭐⭐⭐⭐⭐</div>
+              <p className="testimonial-text">
+                "Absolutely exceptional! The honey truffles are divine, and the
+                packaging is so elegant. Perfect for gifting. Will definitely
+                order again!"
+              </p>
+              <div className="testimonial-author">
+                <div className="author-avatar">A</div>
+                <div>
+                  <div className="author-name">Anjali Sharma</div>
+                  <div className="author-role">Regular Customer</div>
+                </div>
+              </div>
+            </div>
+            <div className="testimonial-card">
+              <div className="testimonial-stars">⭐⭐⭐⭐⭐</div>
+              <p className="testimonial-text">
+                "Ordered custom boxes for our wedding. The team was incredibly
+                helpful and the sweets were a huge hit with our guests. Highly
+                recommend!"
+              </p>
+              <div className="testimonial-author">
+                <div className="author-avatar">R</div>
+                <div>
+                  <div className="author-name">Rajesh Kumar</div>
+                  <div className="author-role">Event Planner</div>
+                </div>
+              </div>
+            </div>
+            <div className="testimonial-card">
+              <div className="testimonial-stars">⭐⭐⭐⭐⭐</div>
+              <p className="testimonial-text">
+                "Best sweets in Bangalore! Fresh, delicious, and always
+                delivered on time. The quality is consistently outstanding."
+              </p>
+              <div className="testimonial-author">
+                <div className="author-avatar">P</div>
+                <div>
+                  <div className="author-name">Priya Reddy</div>
+                  <div className="author-role">Food Blogger</div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
-      <footer className="about-cta">
+      {/* Contact Us Section */}
+      <section className="contact-us-section">
         <div className="container">
-          <h3>Ready to try our sweets?</h3>
-          <a className="btn-primary" href="/sweets">
-            Shop Now
-          </a>
-        </div>
-        <div className="container about-contact-footer">
-          <h4>Contact Us</h4>
-          <form className="about-contact-form" onSubmit={handleSubmit}>
-            <div className="form-row">
-              <input
-                type="text"
-                name="name"
-                placeholder="Your name (optional)"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-              />
-              <input
-                type="email"
-                name="email"
-                placeholder="Your email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-              />
-            </div>
-            <div>
-              <textarea
-                name="message"
-                placeholder="Write a short message (order inquiry, question...)"
-                value={message}
-                onChange={(e) => setMessage(e.target.value)}
-                required
-              />
-            </div>
-            {error && <div className="form-error">{error}</div>}
-            {submitted && (
-              <div className="form-success">
-                Your email client should open now.
+          <div className="contact-us-header">
+            <h2>Contact Us</h2>
+            <p className="contact-us-subtitle">
+              We'd love to hear from you. Get in touch with us today!
+            </p>
+          </div>
+
+          <div className="contact-us-wrapper">
+            {/* Contact Info Grid */}
+            <div className="contact-info-grid">
+              <div className="contact-info-card">
+                <div className="contact-icon">📍</div>
+                <h3>Visit Us</h3>
+                <p>
+                  Sai Mistrywood Layout
+                  <br />
+                  Bangalore, India 560001
+                </p>
               </div>
-            )}
-            <div className="form-actions">
-              <button type="submit" className="btn-primary">
-                Send Message
-              </button>
-              <small className="contact-note">
-                Or email hello@sweetshop.example
-              </small>
+
+              <div className="contact-info-card">
+                <div className="contact-icon">📞</div>
+                <h3>Call Us</h3>
+                <p>
+                  <a href="tel:+919876543210">+91 9876543210</a>
+                </p>
+              </div>
+
+              <div className="contact-info-card">
+                <div className="contact-icon">📧</div>
+                <h3>Email</h3>
+                <p>
+                  <a href="mailto:hello@sweetshop.com">hello@sweetshop.com</a>
+                </p>
+              </div>
+
+              <div className="contact-info-card">
+                <div className="contact-icon">🕐</div>
+                <h3>Hours</h3>
+                <p>
+                  Mon - Fri: 10 AM - 8 PM
+                  <br />
+                  Sat - Sun: 11 AM - 7 PM
+                </p>
+              </div>
             </div>
-          </form>
+
+            {/* Contact Form */}
+            <div className="contact-form-wrapper">
+              <h3 className="form-title">Send us a Message</h3>
+              <form className="contact-form" onSubmit={handleSubmit}>
+                <div className="form-group">
+                  <label htmlFor="name">Your Name</label>
+                  <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    placeholder="Enter your name"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="email">
+                    Email Address <span className="required">*</span>
+                  </label>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    placeholder="your.email@example.com"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="message">
+                    Message <span className="required">*</span>
+                  </label>
+                  <textarea
+                    id="message"
+                    name="message"
+                    placeholder="Tell us about your inquiry..."
+                    value={message}
+                    onChange={(e) => setMessage(e.target.value)}
+                    required
+                  />
+                </div>
+
+                {error && <div className="form-error">{error}</div>}
+                {submitted && (
+                  <div className="form-success">
+                    ✓ Thank you! We'll get back to you soon.
+                  </div>
+                )}
+
+                <button type="submit" className="submit-btn">
+                  Send Message
+                </button>
+              </form>
+            </div>
+          </div>
         </div>
-      </footer>
+      </section>
+
+      {/* CTA Section */}
+      <section className="cta-section">
+        <div className="container">
+          <div className="cta-content">
+            <h2>Ready to Experience Our Sweet Creations?</h2>
+            <p>Explore our collection and order your favorites today</p>
+            <button
+              className="btn-primary btn-large"
+              onClick={() => navigate("/sweets")}
+            >
+              Start Shopping
+            </button>
+          </div>
+        </div>
+      </section>
     </main>
   );
 }
