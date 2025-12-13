@@ -1,0 +1,625 @@
+/* Checkout Page Styles */
+.checkout-page {
+  background: #fff7f0;
+  padding: 28px 20px;
+  min-height: 100vh;
+  box-sizing: border-box;
+  color: #111;
+  font-family: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
+}
+
+.checkout-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Empty Cart Message */
+.empty-cart-msg {
+  background: #fff9f8;
+  border-radius: 12px;
+  padding: 60px 40px;
+  text-align: center;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+
+.empty-cart-msg h2 {
+  margin: 0 0 12px 0;
+  font-size: 24px;
+  color: #333;
+}
+
+.empty-cart-msg p {
+  margin: 0 0 24px 0;
+  font-size: 15px;
+  color: #666;
+}
+
+/* Progress Stepper */
+.progress-stepper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 40px;
+  gap: 12px;
+}
+
+.step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  position: relative;
+}
+
+.step-num {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #f0e9e6;
+  border: 2px solid #e8ddd8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  color: #999;
+  font-size: 14px;
+  transition: all 300ms ease;
+}
+
+.step.active .step-num {
+  background: #ff6b6b;
+  border-color: #ff6b6b;
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(255, 107, 107, 0.25);
+}
+
+.step.completed .step-num {
+  background: #51cf66;
+  border-color: #51cf66;
+  color: #fff;
+}
+
+.step-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: #999;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  transition: color 300ms ease;
+}
+
+.step.active .step-label,
+.step.completed .step-label {
+  color: #333;
+}
+
+.step-line {
+  width: 60px;
+  height: 2px;
+  background: #e8ddd8;
+  margin: 0 -12px;
+  transition: background 300ms ease;
+}
+
+.step.completed ~ .step-line {
+  background: #51cf66;
+}
+
+/* Main Checkout Layout */
+.checkout-wrap {
+  display: grid;
+  grid-template-columns: 1fr 360px;
+  gap: 28px;
+  align-items: start;
+}
+
+/* Form Section */
+.checkout-form {
+  background: #fff9f8;
+  border-radius: 12px;
+  padding: 32px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+
+.form-section {
+  animation: slideIn 300ms ease;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.form-section h2 {
+  margin: 0 0 8px 0;
+  font-size: 22px;
+  color: #333;
+}
+
+.section-desc {
+  margin: 0 0 24px 0;
+  font-size: 14px;
+  color: #666;
+}
+
+.form-section h3 {
+  margin: 24px 0 16px 0;
+  font-size: 16px;
+  color: #333;
+  font-weight: 600;
+}
+
+/* Form Groups */
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group.full {
+  grid-column: 1 / -1;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #333;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.form-group input,
+.form-group select {
+  width: 100%;
+  padding: 12px 14px;
+  border: 2px solid #333;
+  border-radius: 8px;
+  font-size: 14px;
+  font-family: inherit;
+  background: #fff;
+  color: #000;
+  transition: all 200ms ease;
+  box-sizing: border-box;
+  font-weight: 500;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  outline: none;
+  border-color: #ff6b6b;
+  box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.2);
+}
+
+.form-group input::placeholder {
+  color: #666;
+  font-weight: 400;
+}
+
+/* Strong visibility overrides to counter any global styles */
+.checkout-form .form-group input,
+.checkout-form .form-group select {
+  border: 2px solid #000 !important;
+  background: #ffffff !important;
+  color: #000000 !important;
+}
+
+.checkout-form .form-group input::placeholder {
+  color: #444 !important;
+  opacity: 1 !important;
+}
+
+.checkout-form .form-group label {
+  color: #111 !important;
+}
+
+/* Ensure section container doesn't apply opacity that washes inputs */
+.checkout-form,
+.form-section {
+  background: inherit;
+  opacity: 1 !important;
+}
+
+/* Increase contrast of section text */
+.form-section h2,
+.section-desc {
+  color: #222 !important;
+}
+
+.form-group input.input-error {
+  border-color: #ff6b6b;
+  background: #fff5f5;
+}
+
+.form-group input.input-error:focus {
+  box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.15);
+}
+
+.error-msg {
+  display: block;
+  margin-top: 6px;
+  font-size: 12px;
+  color: #ff6b6b;
+  font-weight: 500;
+}
+
+/* Checkbox Group */
+.checkbox-group {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 20px 0;
+}
+
+.checkbox-group input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+
+.checkbox-group label {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
+  cursor: pointer;
+  text-transform: none;
+  letter-spacing: normal;
+}
+
+/* Divider */
+.divider {
+  height: 1px;
+  background: #e8ddd8;
+  margin: 28px 0;
+}
+
+/* Review Boxes */
+.review-box {
+  background: #fff;
+  border: 1px solid #e8ddd8;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+.review-box h3 {
+  margin: 0 0 12px 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.review-box p {
+  margin: 6px 0;
+  font-size: 14px;
+  color: #555;
+  line-height: 1.5;
+}
+
+.review-box p:first-of-type {
+  margin-top: 0;
+}
+
+/* Confirmation Notice */
+.confirmation-notice {
+  background: linear-gradient(135deg, #ffe8e6 0%, #fff5f3 100%);
+  border: 2px solid #ffb3ad;
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.confirmation-notice h3 {
+  margin: 0 0 12px 0;
+  font-size: 16px;
+  color: #d9534f;
+}
+
+.confirmation-notice p {
+  margin: 6px 0;
+  font-size: 14px;
+  color: #666;
+}
+
+.order-total {
+  margin-top: 12px !important;
+  font-size: 28px !important;
+  font-weight: 700 !important;
+  color: #ff6b6b !important;
+}
+
+/* Form Actions */
+.form-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 32px;
+}
+
+.btn-primary,
+.btn-secondary {
+  flex: 1;
+  padding: 14px 24px;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 200ms ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-family: inherit;
+}
+
+.btn-primary {
+  background: #ff6b6b;
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(255, 107, 107, 0.25);
+}
+
+.btn-primary:hover {
+  background: #ff5252;
+  box-shadow: 0 6px 16px rgba(255, 107, 107, 0.35);
+  transform: translateY(-2px);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+.btn-primary.btn-large {
+  font-size: 15px;
+  padding: 16px 32px;
+}
+
+.btn-secondary {
+  background: #dddddd;
+  color: #111;
+  border: 2px solid #111;
+}
+
+.btn-secondary:hover {
+  background: #cfcfcf;
+  transform: translateY(-2px);
+}
+
+.btn-secondary:active {
+  transform: translateY(0);
+}
+
+/* Strong visibility override for back button in checkout */
+.form-actions .btn-secondary {
+  background: #ffffff !important;
+  color: #000000 !important;
+  border: 2px solid #000000 !important;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+}
+
+.form-actions .btn-secondary:hover {
+  background: #f5f5f5 !important;
+}
+
+/* Order Summary Sidebar */
+.order-summary {
+  background: #fff9f8;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+  position: sticky;
+  top: 20px;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.order-summary h3 {
+  margin: 0 0 20px 0;
+  font-size: 16px;
+  color: #333;
+  font-weight: 600;
+}
+
+.summary-items {
+  margin-bottom: 16px;
+  max-height: 300px;
+  overflow-y: auto;
+  padding-right: 8px;
+}
+
+.summary-item {
+  display: grid;
+  grid-template-columns: 60px 1fr auto;
+  gap: 12px;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid #f0e9e6;
+}
+
+.summary-item:last-child {
+  border-bottom: none;
+}
+
+.summary-item img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 6px;
+  background: #fff;
+  border: 1px solid #e8ddd8;
+}
+
+.item-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.item-name {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 600;
+  color: #333;
+}
+
+.item-qty {
+  margin: 0;
+  font-size: 12px;
+  color: #999;
+}
+
+.item-price {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 700;
+  color: #ff6b6b;
+  white-space: nowrap;
+}
+
+.summary-divider {
+  height: 1px;
+  background: #e8ddd8;
+  margin: 16px 0;
+}
+
+.summary-totals {
+  margin-bottom: 20px;
+}
+
+.total-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  margin-bottom: 8px;
+  color: #666;
+}
+
+.total-row.total-grand {
+  font-size: 15px;
+  font-weight: 700;
+  color: #333;
+  padding-top: 12px;
+  border-top: 2px solid #f0e9e6;
+  margin-bottom: 0;
+}
+
+/* Trust Badges */
+.trust-badges {
+  background: #f0f0f0;
+  border-radius: 8px;
+  padding: 12px;
+  text-align: center;
+}
+
+.trust-badges p {
+  margin: 6px 0;
+  font-size: 12px;
+  color: #555;
+  line-height: 1.4;
+}
+
+.trust-badges p:first-child {
+  margin-top: 0;
+}
+
+.trust-badges p:last-child {
+  margin-bottom: 0;
+}
+
+/* Responsive Design */
+@media (max-width: 900px) {
+  .checkout-wrap {
+    grid-template-columns: 1fr;
+  }
+
+  .order-summary {
+    position: relative;
+    top: auto;
+    max-height: none;
+  }
+
+  .checkout-form {
+    padding: 24px;
+  }
+
+  .progress-stepper {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin-bottom: 32px;
+  }
+
+  .step-line {
+    width: 40px;
+    margin: 0 -8px;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .checkout-page {
+    padding: 16px 12px;
+  }
+
+  .progress-stepper {
+    gap: 8px;
+  }
+
+  .step-num {
+    width: 36px;
+    height: 36px;
+    font-size: 12px;
+  }
+
+  .step-label {
+    font-size: 10px;
+  }
+
+  .step-line {
+    width: 24px;
+  }
+
+  .checkout-form {
+    padding: 16px;
+  }
+
+  .form-section h2 {
+    font-size: 18px;
+  }
+
+  .form-actions {
+    flex-direction: column;
+  }
+
+  .btn-primary,
+  .btn-secondary {
+    width: 100%;
+  }
+
+  .order-summary {
+    padding: 16px;
+  }
+
+  .summary-item {
+    grid-template-columns: 50px 1fr auto;
+  }
+
+  .summary-item img {
+    width: 50px;
+    height: 50px;
+  }
+}

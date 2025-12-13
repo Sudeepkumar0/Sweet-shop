@@ -14,6 +14,7 @@ import {
   FaShoppingCart,
 } from "react-icons/fa";
 import "./styles/profile.css";
+import MyOrders from "./MyOrders";
 
 function decodeJwt(token) {
   try {
@@ -276,6 +277,9 @@ export default function Profile() {
           <div className="profile-token">{token}</div>
         </div>
       </div>
+
+      {/* My Orders Section */}
+      <MyOrders />
     </div>
   );
 }

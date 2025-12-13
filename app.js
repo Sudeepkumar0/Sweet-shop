@@ -40,3 +40,7 @@ app.use("/api/inventory", inventoryRoutes);
 // Cart routes
 const cartRoutes = require("./routes/cart.routes");
 app.use("/api/cart", cartRoutes);
+
+// Order routes
+const orderRoutes = require("./routes/order.routes");
+app.use("/api/orders", orderRoutes);
