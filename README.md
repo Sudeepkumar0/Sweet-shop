@@ -179,17 +179,21 @@ npm run dev
 
 ![User Registration](frontend/public/snaps/register.png)
 
-### Sweets List (User Grid)
+### Home page (User Grid)
 
-![Sweets List](frontend/public/snaps/sweetslist.png)
+![Home page](frontend/public/snaps/home.png)
 
-### Out-of-Stock Sweet
+### About page
 
-![Out of Stock](frontend/public/snaps/sweetsoutofstock.png)
+![About page](frontend/public/snaps/about.png)
 
-### Purchase Flow
+### Favorites
 
-![Purchase Sweet](frontend/public/snaps/sweetpurcahsed.png)
+![Favorites](frontend/public/snaps/favorites.png)
+
+### My Box
+
+![My Box](frontend/public/snaps/mybox.png)
 
 ### Search Sweets
 
@@ -197,7 +201,7 @@ npm run dev
 
 ### Admin Panel – Data Upload
 
-![Admin Panel Image Upload](frontend/public/snaps/adminpanel.png)
+![Admin Panel Image Upload](frontend/public/snaps/admin_panel.png)
 
 
 ### Admin Panel – Data Update
@@ -353,6 +357,7 @@ API endpoints can also be tested using Postman or similar tools. Example test im
 
 
 Co-authored-by: GitHub Copilot <copilot@users.noreply.github.com>
+
 
 
 
