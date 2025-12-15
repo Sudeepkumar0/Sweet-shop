@@ -2,23 +2,23 @@
 
 > A comprehensive MERN stack e-commerce application for managing sweets inventory with role-based access, user authentication, shopping cart functionality, and admin panel.
 
-## 📋 Overview
+##Overview
 
 The **Sweet Shop Management System** is a full-featured e-commerce platform built with the MERN stack (MongoDB, Express.js, React, Node.js). It provides a complete solution for managing a sweet shop's inventory, user authentication, shopping operations, and administrative tasks.
 
 ### Key Highlights
 
-- ✅ User registration & JWT authentication with 7-day token expiry
-- ✅ Role-based access control (User & Admin roles)
-- ✅ Complete product browsing with search and filtering
-- ✅ Shopping cart with persistent database storage
-- ✅ Admin panel for product CRUD operations with image uploads
-- ✅ Real-time inventory management
-- ✅ Comprehensive automated testing (Jest + Supertest)
-- ✅ Responsive design with modern UI/UX
-- ✅ Optimistic updates with server state synchronization
+- User registration & JWT authentication with 7-day token expiry
+- Role-based access control (User & Admin roles)
+- Complete product browsing with search and filtering
+- Shopping cart with persistent database storage
+- Admin panel for product CRUD operations with image uploads
+- Real-time inventory management
+- Comprehensive automated testing (Jest + Supertest)
+- Responsive design with modern UI/UX
+- Optimistic updates with server state synchronization
 
-## 🚀 Project Development Roadmap
+## Project Development Roadmap
 
 1. **Database Design** - MongoDB schema for users, sweets, and carts
 2. **Backend API Development** - Express.js REST APIs with authentication
@@ -29,7 +29,7 @@ The **Sweet Shop Management System** is a full-featured e-commerce platform buil
 7. **Admin Functionality** - Product management with image uploads
 8. **Quality & Documentation** - Testing, error handling, and screenshots
 
-## 🗄️ Database Architecture & Design
+## Database Architecture & Design
 
 ### MongoDB Setup
 
@@ -113,100 +113,100 @@ Stores user shopping carts with items and their quantities.
 
 ### User Features
 
-- 📝 **User Registration & Login** - Secure account creation with JWT authentication
-- 🔐 **Session Management** - 7-day token expiry with automatic login
-- 🛍️ **Browse Products** - Grid view of all available sweets with images
-- 🔍 **Search & Filter** - Find sweets by name and category
-- 📦 **Shopping Cart** - Add/remove items with persistent database storage
-- 💾 **Cart Persistence** - Cart data saved across sessions
-- 📋 **Order History** - View past purchases and orders
-- ❤️ **Favorites** - Save favorite items for quick access
-- 👤 **User Profile** - View and manage account information
-- 📱 **Responsive Design** - Works seamlessly on all device sizes
+- **User Registration & Login** - Secure account creation with JWT authentication
+- **Session Management** - 7-day token expiry with automatic login
+- **Browse Products** - Grid view of all available sweets with images
+- **Search & Filter** - Find sweets by name and category
+- **Shopping Cart** - Add/remove items with persistent database storage
+- **Cart Persistence** - Cart data saved across sessions
+- **Order History** - View past purchases and orders
+- **Favorites** - Save favorite items for quick access
+- **User Profile** - View and manage account information
+- **Responsive Design** - Works seamlessly on all device sizes
 
 ### Admin Features
 
-- 🔑 **Admin Authentication** - Separate admin login with role verification
-- ➕ **Add Products** - Create new sweets with details and images
-- ✏️ **Edit Products** - Update sweet information and pricing
-- 🗑️ **Delete Products** - Remove sweets from inventory
-- 📊 **Inventory Management** - Real-time stock tracking and updates
-- 📸 **Image Upload** - Upload product images with file handling
-- 🔍 **Admin Dashboard** - Comprehensive view of all products
+- **Admin Authentication** - Separate admin login with role verification
+- **Add Products** - Create new sweets with details and images
+- **Edit Products** - Update sweet information and pricing
+- **Delete Products** - Remove sweets from inventory
+- **Inventory Management** - Real-time stock tracking and updates
+- **Image Upload** - Upload product images with file handling
+- **Admin Dashboard** - Comprehensive view of all products
 
 ### Technical Features
 
-- 🔒 **JWT Authentication** - Secure token-based authentication
-- 🛡️ **Role-Based Access** - User and admin role separation
-- ✔️ **Input Validation** - Backend validation on all requests
-- ⚠️ **Error Handling** - Comprehensive error management
-- 🔄 **State Management** - Context API for global state
-- ⚡ **Optimistic Updates** - Immediate UI feedback with server sync
-- 🧪 **Automated Testing** - Jest and Supertest coverage
-- 📝 **API Documentation** - Complete endpoint documentation
+- **JWT Authentication** - Secure token-based authentication
+- **Role-Based Access** - User and admin role separation
+- **Input Validation** - Backend validation on all requests
+- **Error Handling** - Comprehensive error management
+- **State Management** - Context API for global state
+- **Optimistic Updates** - Immediate UI feedback with server sync
+- **Automated Testing** - Jest and Supertest coverage
+- **API Documentation** - Complete endpoint documentation
 
-## 🤖 AI Tools & Assistance
+## AI Tools & Assistance
 
 This project leveraged cutting-edge AI tools to accelerate development, enhance code quality, and streamline documentation:
 
-| Tool | Purpose | Usage |
-|------|---------|-------|
-| **GitHub Copilot Pro** | Code scaffolding & auto-completion | React components, Express routes, MongoDB models |
-| **ChatGPT** | Guidance & debugging | Step-by-step instructions, code review, documentation |
-| **StitchAI** | UI/UX design | Layout generation, component structures |
-| **Gemini** | Ideation & refinement | Concept validation, prompt optimization |
-| **AI Image Generator** | Visual assets | Icons and demo visuals |
+| Tool                   | Purpose                            | Usage                                                 |
+| ---------------------- | ---------------------------------- | ----------------------------------------------------- |
+| **GitHub Copilot Pro** | Code scaffolding & auto-completion | React components, Express routes, MongoDB models      |
+| **ChatGPT**            | Guidance & debugging               | Step-by-step instructions, code review, documentation |
+| **StitchAI**           | UI/UX design                       | Layout generation, component structures               |
+| **Gemini**             | Ideation & refinement              | Concept validation, prompt optimization               |
+| **AI Image Generator** | Visual assets                      | Icons and demo visuals                                |
 
 These tools enabled rapid prototyping, improved code quality, and ensured industry best practices throughout the development lifecycle.
 
-## 🛠️ Technology Stack
+## Technology Stack
 
 ### Frontend
 
-| Technology | Version | Purpose |
-|------------|---------|---------|
-| **React** | 18+ | UI library and component framework |
-| **Vite** | 7.1.6+ | Build tool and dev server (⚡ fast HMR) |
-| **React Router** | 7.9.1+ | Client-side routing and navigation |
-| **Axios** | 1.12.2+ | HTTP client for API requests |
-| **React Icons** | 5.5.0+ | Icon library for UI components |
-| **Context API** | Built-in | Global state management |
-| **CSS** | 3 | Styling and responsive design |
+| Technology       | Version  | Purpose                                 |
+| ---------------- | -------- | --------------------------------------- |
+| **React**        | 18+      | UI library and component framework      |
+| **Vite**         | 7.1.6+   | Build tool and dev server (⚡ fast HMR) |
+| **React Router** | 7.9.1+   | Client-side routing and navigation      |
+| **Axios**        | 1.12.2+  | HTTP client for API requests            |
+| **React Icons**  | 5.5.0+   | Icon library for UI components          |
+| **Context API**  | Built-in | Global state management                 |
+| **CSS**          | 3        | Styling and responsive design           |
 
 ### Backend
 
-| Technology | Version | Purpose |
-|------------|---------|---------|
-| **Node.js** | 14+ | JavaScript runtime |
-| **Express.js** | 4.18.2+ | Web framework and routing |
-| **Mongoose** | 7.6.0+ | MongoDB object modeling |
-| **JWT** | 9.0.2+ | Authentication and authorization |
-| **bcrypt** | 6.0.0+ | Password hashing and security |
-| **Multer** | 2.0.2+ | File upload and handling |
-| **CORS** | 2.8.5+ | Cross-origin resource sharing |
-| **Morgan** | 1.10.0+ | HTTP request logging |
+| Technology     | Version | Purpose                          |
+| -------------- | ------- | -------------------------------- |
+| **Node.js**    | 14+     | JavaScript runtime               |
+| **Express.js** | 4.18.2+ | Web framework and routing        |
+| **Mongoose**   | 7.6.0+  | MongoDB object modeling          |
+| **JWT**        | 9.0.2+  | Authentication and authorization |
+| **bcrypt**     | 6.0.0+  | Password hashing and security    |
+| **Multer**     | 2.0.2+  | File upload and handling         |
+| **CORS**       | 2.8.5+  | Cross-origin resource sharing    |
+| **Morgan**     | 1.10.0+ | HTTP request logging             |
 
 ### Database
 
-| Technology | Purpose |
-|------------|---------|
+| Technology  | Purpose                                     |
+| ----------- | ------------------------------------------- |
 | **MongoDB** | NoSQL database (Community edition or Atlas) |
 
 ### Testing
 
-| Technology | Version | Purpose |
-|------------|---------|---------|
-| **Jest** | 30.1.3+ | Testing framework |
-| **Supertest** | 7.1.4+ | HTTP assertion library |
-| **Nodemon** | 3.0.1+ | Development auto-reload |
+| Technology    | Version | Purpose                 |
+| ------------- | ------- | ----------------------- |
+| **Jest**      | 30.1.3+ | Testing framework       |
+| **Supertest** | 7.1.4+  | HTTP assertion library  |
+| **Nodemon**   | 3.0.1+  | Development auto-reload |
 
 ### Ports & Configuration
 
-| Service | Port | Environment |
-|---------|------|-------------|
-| Frontend (Vite) | 5173 | Development |
-| Backend (Express) | 5000 | Development |
-| MongoDB | 27017 | Default |
+| Service           | Port  | Environment |
+| ----------------- | ----- | ----------- |
+| Frontend (Vite)   | 5173  | Development |
+| Backend (Express) | 5000  | Development |
+| MongoDB           | 27017 | Default     |
 
 ## 📂 Project Structure
 
@@ -318,20 +318,20 @@ SweetShop/
 
 ### Directory Purpose Summary
 
-| Directory | Purpose |
-|-----------|---------|
-| `backend/config` | Database and server configuration |
-| `backend/controllers` | Business logic and API handlers |
-| `backend/models` | Mongoose schemas and data models |
-| `backend/routes` | API endpoint definitions |
-| `backend/middleware` | Authentication and request processing |
-| `backend/tests` | Jest & Supertest test files |
-| `frontend/src` | React components and pages |
-| `frontend/src/styles` | Component-specific CSS files |
-| `frontend/public` | Static assets and screenshots |
-| `uploads` | User-uploaded product images |
+| Directory             | Purpose                               |
+| --------------------- | ------------------------------------- |
+| `backend/config`      | Database and server configuration     |
+| `backend/controllers` | Business logic and API handlers       |
+| `backend/models`      | Mongoose schemas and data models      |
+| `backend/routes`      | API endpoint definitions              |
+| `backend/middleware`  | Authentication and request processing |
+| `backend/tests`       | Jest & Supertest test files           |
+| `frontend/src`        | React components and pages            |
+| `frontend/src/styles` | Component-specific CSS files          |
+| `frontend/public`     | Static assets and screenshots         |
+| `uploads`             | User-uploaded product images          |
 
-## 🚀 Getting Started
+## Getting Started
 
 ### Prerequisites
 
@@ -441,7 +441,7 @@ cd backend
 npm run seed
 ```
 
-## 📖 Usage Guide
+## Usage Guide
 
 ### User Workflow
 
@@ -462,7 +462,7 @@ npm run seed
 5. **Monitor Inventory** → Track stock levels
 6. **Update Stock** → Adjust quantities as needed
 
-## 🧪 Testing
+## Testing
 
 ### Backend Automated Tests
 
@@ -477,20 +477,22 @@ npm test
 
 #### Test Coverage
 
-- ✅ **Authentication Tests** (`auth.test.js`)
+- **Authentication Tests** (`auth.test.js`)
+
   - User registration validation
   - Login functionality
   - JWT token generation
   - Password hashing
 
-- ✅ **Products Tests** (`sweets.test.js`)
+- **Products Tests** (`sweets.test.js`)
+
   - Get all sweets
   - Get sweet by ID
   - Admin create sweet
   - Admin update sweet
   - Admin delete sweet
 
-- ✅ **Cart & Purchase Tests** (`purchase.test.js`)
+- **Cart & Purchase Tests** (`purchase.test.js`)
   - Add item to cart
   - Update cart quantity
   - Remove item from cart
@@ -513,21 +515,21 @@ Postman test files are available in `backend/tests/` directory.
 
 #### Test Endpoints
 
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| POST | `/api/auth/register` | User registration |
-| POST | `/api/auth/login` | User login |
-| GET | `/api/sweets` | Get all sweets |
-| GET | `/api/sweets/:id` | Get sweet by ID |
-| POST | `/api/sweets` | Create sweet (admin) |
-| PUT | `/api/sweets/:id` | Update sweet (admin) |
-| DELETE | `/api/sweets/:id` | Delete sweet (admin) |
-| GET | `/api/cart` | Get user cart |
-| POST | `/api/cart/item` | Add/update item |
-| DELETE | `/api/cart/item/:id` | Remove item |
-| DELETE | `/api/cart` | Clear cart |
+| Method | Endpoint             | Description          |
+| ------ | -------------------- | -------------------- |
+| POST   | `/api/auth/register` | User registration    |
+| POST   | `/api/auth/login`    | User login           |
+| GET    | `/api/sweets`        | Get all sweets       |
+| GET    | `/api/sweets/:id`    | Get sweet by ID      |
+| POST   | `/api/sweets`        | Create sweet (admin) |
+| PUT    | `/api/sweets/:id`    | Update sweet (admin) |
+| DELETE | `/api/sweets/:id`    | Delete sweet (admin) |
+| GET    | `/api/cart`          | Get user cart        |
+| POST   | `/api/cart/item`     | Add/update item      |
+| DELETE | `/api/cart/item/:id` | Remove item          |
+| DELETE | `/api/cart`          | Clear cart           |
 
-## 📸 Feature Screenshots
+## Feature Screenshots
 
 ### Authentication Flow
 
@@ -585,8 +587,10 @@ Postman test files are available in `backend/tests/` directory.
 
 ### Database Records
 
-![MongoDB Users](frontend/public/snaps/mondousers.png)
-![MongoDB Sweets](frontend/public/snaps/mongo_data.png)
+![MongoDB Users](frontend/public/snaps/m1c.png)
+![MongoDB Sweets](frontend/public/snaps/m2c.png)
+![MongoDB Orders](frontend/public/snaps/m3o.png)
+![MongoDB Cart](frontend/public/snaps/m4.png)
 
 ## 🔗 API Documentation
 
@@ -702,14 +706,14 @@ Content-Type: multipart/form-data
 
 **Form Data:**
 
-| Field | Type | Required | Example |
-|-------|------|----------|---------|
-| name | text | Yes | Chocolate Ladoo |
-| price | text | Yes | 50 |
-| description | text | Yes | Delicious homemade... |
-| category | text | Yes | Indian |
-| quantity | text | Yes | 100 |
-| image | file | Yes | image.jpg |
+| Field       | Type | Required | Example               |
+| ----------- | ---- | -------- | --------------------- |
+| name        | text | Yes      | Chocolate Ladoo       |
+| price       | text | Yes      | 50                    |
+| description | text | Yes      | Delicious homemade... |
+| category    | text | Yes      | Indian                |
+| quantity    | text | Yes      | 100                   |
+| image       | file | Yes      | image.jpg             |
 
 **Response:**
 
