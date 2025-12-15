@@ -195,9 +195,17 @@ npm run dev
 
 ![My Box](frontend/public/snaps/mybox.png)
 
-### Search Sweets
+### Checkout
 
-![Search Sweets](frontend/public/snaps/sweetssearch.png)
+![My Box](frontend/public/snaps/checkout.png)
+
+### Profile
+
+![Profile](frontend/public/snaps/profile.png)
+
+### My Orders 
+
+![My Orders](frontend/public/snaps/my_orders.png)
 
 ### Admin Panel – Data Upload
 
@@ -357,6 +365,7 @@ API endpoints can also be tested using Postman or similar tools. Example test im
 
 
 Co-authored-by: GitHub Copilot <copilot@users.noreply.github.com>
+
 
 
 
