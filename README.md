@@ -104,11 +104,6 @@ Stores user shopping carts with items and their quantities.
 - **Persistence**: Cart data persists across user sessions
 - **Data Integrity**: Server-side validation on all mutations
 
-### Database Snapshot
-
-![Users Collection](frontend/public/snaps/mondousers.png)
-![Sweets Data](frontend/public/snaps/mongo_data.png)
-
 ## ✨ Core Features
 
 ### User Features
@@ -1235,3 +1230,4 @@ The **Sweet Shop Management System** is a complete, production-ready e-commerce 
 **Version**: 1.0.0  
 **Status**: Production Ready ✅  
 **Repository**: [GitHub](https://github.com/Sudeepkumar0/Sweet-shop)
+
